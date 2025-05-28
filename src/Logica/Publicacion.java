@@ -6,7 +6,7 @@ public abstract class Publicacion {
     protected String id;
     protected String titulo;
     protected String materia;
-    protected String numPaginas;
+    protected int numPaginas;
     protected ArrayList<Ejemplar> ejemplares;
 
     public int cantTotalEjemp(){
@@ -50,11 +50,11 @@ public abstract class Publicacion {
         this.materia = materia;
     }
 
-    public String getNumPaginas() {
+    public int getNumPaginas() {
         return numPaginas;
     }
 
-    public void setNumPaginas(String numPaginas) {
+    public void setNumPaginas(int numPaginas) {
         this.numPaginas = numPaginas;
     }
 
@@ -62,7 +62,7 @@ public abstract class Publicacion {
         return ejemplares;
     }
 
-    public Publicacion (String id, String titulo, String materia, String numPaginas) {
+    public Publicacion (String id, String titulo, String materia, int numPaginas) {
         setId(id);
         setTitulo(titulo);
         setMateria(materia);

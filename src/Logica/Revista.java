@@ -28,6 +28,11 @@ public class Revista extends Publicacion {
 
     @Override
     public int calcularPlazoMax() {
-        return 7; // Ejemplo de plazo máximo para una revista
+        int salida=30;
+        int calculo=cantTotalEjemp()*2;
+        if(calculo<salida){
+            salida=calculo;
+        }
+        return salida;
     }
 }

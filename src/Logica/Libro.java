@@ -25,6 +25,11 @@ public class Libro extends Publicacion {
     }
 
     public int calcularPlazoMax() {
-        return 15; // Ejemplo de plazo máximo para un libro
+        int salida=30;
+        int calculo=(Integer)(getNumPaginas()/50)+(cantTotalEjemp()*2);
+        if(calculo<salida){
+            salida=calculo;
+        }
+        return salida;
     }
 }

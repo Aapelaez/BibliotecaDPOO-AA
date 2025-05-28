@@ -12,7 +12,12 @@ public class Articulo extends Publicacion{
 
     @Override
     public int calcularPlazoMax() {
-        return 68;
+        int salida=30;
+        int calculo=(Integer)(getNumPaginas()/30)+cantTotalEjemp();
+        if(calculo<salida){
+            salida=calculo;
+        }
+        return salida;
     }
 
     public ArrayList<String> getArbitros() {
