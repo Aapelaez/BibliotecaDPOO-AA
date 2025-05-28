@@ -54,7 +54,7 @@ public class Usuario extends Persona {
 
                     while (i < torpedo.getPrestamos().size() && posible) {
                         Prestamo prestamo = torpedo.getPrestamos().get(i);
-                        if (prestamo.encontrarPrestNoEntregado(idPublicacion, getNumUsuario()) != null) {
+                        if (prestamo.PrestNoEntregado(idPublicacion, getNumUsuario()) != null) {
                             posible = false;
                         } else if (prestamo.getEstado() == EstadoPrestamo.EntregadoEnTiempo ||
                                 prestamo.getEstado() == EstadoPrestamo.EntregadoFueraDeTiempo) {

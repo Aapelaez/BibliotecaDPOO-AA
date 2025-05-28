@@ -72,10 +72,10 @@ public class Prestamo {
             return salida;
     }
 
-    public Prestamo encontrarPrestNoEntregado(String idPublicacion, String numUsuario) {
+    public Prestamo PrestNoEntregado(String idPublicacion, String numUsuario) {
         Prestamo salida = null;
         if (idPublicacion != null && numUsuario != null) {
-            if (getUsuario().getNumUsuario().equals(numUsuario) && getPublicacion().compareTo(idPublicacion)) {
+            if (getUsuario().compareTo(numUsuario) && getPublicacion().compareTo(idPublicacion)) {
                 if (getEstado() == EstadoPrestamo.NoEntregado || getEstado() == EstadoPrestamo.NoEntregadoFueraDeTiempo) {
                     salida = this;
                 }

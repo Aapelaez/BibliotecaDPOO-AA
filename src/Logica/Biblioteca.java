@@ -294,7 +294,7 @@ public class Biblioteca {
     public ArrayList<Usuario> usuariosAcreditadosMes(int mes, int anno) {
         ArrayList<Usuario> usuariosAcreditados = new ArrayList<>();
         for (Usuario usuario : usuarios) {
-            if(compararMesAnno(getMesActual(),getAnnoActual(),usuario.getFechaAcreditacion())){
+            if(compararMesAnno(mes,anno,usuario.getFechaAcreditacion())){
                 usuariosAcreditados.add(usuario);
             }
         }
