@@ -1,27 +1,13 @@
 package Logica;
 
-import java.util.ArrayList;
 
 public abstract class Publicacion {
     protected String id;
     protected String titulo;
     protected String materia;
     protected int numPaginas;
-    protected ArrayList<Ejemplar> ejemplares;
+    protected int cantTotalEjemp;
 
-    public int cantTotalEjemp(){
-        return ejemplares.size();
-    }
-
-    public int cantEjempPrestados() {
-        int count = 0;
-        for (Ejemplar ejemplar : ejemplares) {
-            if (!ejemplar.estaDisponible()){
-                count++;
-            }
-        }
-        return count;
-    }
     public boolean compareTo(String id) {
         return this.id.equals(id);
     }
@@ -57,19 +43,21 @@ public abstract class Publicacion {
     public void setNumPaginas(int numPaginas) {
         this.numPaginas = numPaginas;
     }
-
-    public ArrayList<Ejemplar> getEjemplares() {
-        return ejemplares;
+    public int getCantTotalEjemp() {
+        return cantTotalEjemp;
+    }
+    public void setCantTotalEjemp(int cantTotalEjemp) {
+        this.cantTotalEjemp = cantTotalEjemp;
     }
 
-    public Publicacion (String id, String titulo, String materia, int numPaginas) {
+    public Publicacion (String id, String titulo, String materia, int numPaginas, int cantTotalEjemp) {
         setId(id);
         setTitulo(titulo);
         setMateria(materia);
         setNumPaginas(numPaginas);
-        this.ejemplares = new ArrayList<Ejemplar>();
+        setCantTotalEjemp(cantTotalEjemp);
     }
-    public Publicacion() {
-        this.ejemplares = new ArrayList<Ejemplar>();
-    }
+
+
+    public Publicacion() {}
 }

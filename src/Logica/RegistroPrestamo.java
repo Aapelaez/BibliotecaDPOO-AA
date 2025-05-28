@@ -6,11 +6,14 @@ public class RegistroPrestamo {
     private int cantidad;
     private String idPublicacion;
 
-    public RegistroPrestamo(int mes, int anno, int cantidad, String idPublicacion) {
+    public RegistroPrestamo(int mes, int anno, String idPublicacion) {
         setMes(mes);
         setAnno(anno);
-        setCantidad(cantidad);
+        setCantidad(1);
         setIdPublicacion(idPublicacion);
+    }
+    public void incrementarCantidad() {
+        this.cantidad++;
     }
     public int getMes() {
         return mes;

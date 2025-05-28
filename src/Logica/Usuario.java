@@ -7,22 +7,16 @@ public class Usuario extends Persona{
     private String numUsuario;
     private Date fechaAcreditacion;
     private ArrayList<TorpedoUsuario> torpedos;
-    private ArrayList<Prestamo> prestamos;
 
     public Usuario(String id, String nombre, String apellidos, int edad, char genero, String numUsuario, Date fechaAcreditacion) {
         super(id, nombre, apellidos, edad, genero);
         setNumUsuario(numUsuario);
         setFechaAcreditacion(fechaAcreditacion);
         this.torpedos = new ArrayList<TorpedoUsuario>();
-        this.prestamos = new ArrayList<Prestamo>();
     }
 
     public ArrayList<TorpedoUsuario> getTorpedos() {
         return torpedos;
-    }
-
-    public ArrayList<Prestamo> getPrestamos() {
-        return prestamos;
     }
 
     private void setNumUsuario(String numUsuario) {
@@ -51,5 +45,17 @@ public class Usuario extends Persona{
 
     public void solicitarProrroga(Prestamo prestamo){
         //Aqui se le solicita a la biblioteca una prórroga de una publicación y ella revisa
+    }
+
+    public boolean verificarCondicPrestamo(String idPublicacion) {
+        // Aqui se verifica si el usuario cumple con las condiciones para solicitar un préstamo
+        // de una publicación en particular
+        return true; // Por defecto, se retorna true, pero aquí se implementaría la lógica real
+    }
+
+    public boolean verificarCondicProrroga(Prestamo prestamo) {
+        // Aqui se verifica si el usuario cumple con las condiciones para solicitar una prórroga
+        // de un préstamo en particular
+        return true; // Por defecto, se retorna true, pero aquí se implementaría la lógica real
     }
 }

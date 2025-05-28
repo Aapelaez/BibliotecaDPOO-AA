@@ -1,19 +1,23 @@
 package Logica;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Prestamo {
     private Date fechaConcepcion;
     private Date fechaLimite;
-    //boolean de prorrogado?
-    /*problema a la hora de conocer de que tipo de publicación es el ejemplar para
-    conceder la prórroga, ya que cada tipo de publicación tiene un plazo máximo diferente*/
-    private Ejemplar ejemplar;
+    private Usuario usuario;
+    private Publicacion publicacion;
+    private String idTrabajador;
+    private boolean prorrogado;
 
-    public Prestamo(Date fechaConcepcion, Date fechaLimite, Ejemplar ejemplar) {
+    public Prestamo(Date fechaConcepcion, Date fechaLimite, Usuario usuario, String idTrabajador, Publicacion publicacion) {
         setFechaConcepcion(fechaConcepcion);
         setFechaLimite(fechaLimite);
-        setEjemplar(ejemplar);
+        setPublicacion(publicacion);
+        setUsuario(usuario);
+        setIdTrabajador(idTrabajador);
+        setProrrogado(false);
     }
 
     public Date getFechaConcepcion() {
@@ -32,11 +36,47 @@ public class Prestamo {
         this.fechaLimite = fechaLimite;
     }
 
-    public Ejemplar getEjemplar() {
-        return ejemplar;
+    public void actualizarProrroga(){
+        prorrogado= true;
+        setFechaLimite(aumentarFechaFinEnMitadDelIntervalo(fechaConcepcion, fechaLimite));
     }
 
-    public void setEjemplar(Ejemplar ejemplar) {
-        this.ejemplar = ejemplar;
+    public static Date aumentarFechaFinEnMitadDelIntervalo(Date fechaInicio, Date fechaFin) {
+        long diffMillis = fechaFin.getTime() - fechaInicio.getTime();
+        long mitadIntervalo = diffMillis / 2;
+        // Nueva fecha fin es la fecha fin + la mitad del intervalo
+        return new Date(fechaFin.getTime() + mitadIntervalo);
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getIdTrabajador() {
+        return idTrabajador;
+    }
+
+    public void setIdTrabajador(String idTrabajador) {
+        this.idTrabajador = idTrabajador;
+    }
+
+    public boolean isProrrogado() {
+        return prorrogado;
+    }
+
+    public void setProrrogado(boolean prorrogado) {
+        this.prorrogado = prorrogado;
+    }
+
+    public Publicacion getPublicacion() {
+        return publicacion;
+    }
+
+    public void setPublicacion(Publicacion publicacion) {
+        this.publicacion = publicacion;
     }
 }

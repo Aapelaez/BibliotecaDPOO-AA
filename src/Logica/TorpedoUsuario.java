@@ -15,6 +15,10 @@ public class TorpedoUsuario {
         this.prestamos = new ArrayList<Prestamo>();
     }
 
+    public boolean compareTo(String idUsuario) {
+        return this.idUsuario.equals(idUsuario);
+    }
+
     public String getIdUsuario() {
         return idUsuario;
     }

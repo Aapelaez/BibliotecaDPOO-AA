@@ -6,7 +6,7 @@ public class Libro extends Publicacion {
     private ArrayList<String> autores;
     private String editorial;
 
-    public Libro(String id, String titulo, String materia, String numPaginas, String editorial) {
+    public Libro(String id, String titulo, String materia, int numPaginas, String editorial) {
         super(id, titulo, materia, numPaginas);
         this.autores = new ArrayList<String>();
         this.editorial = editorial;
@@ -26,7 +26,7 @@ public class Libro extends Publicacion {
 
     public int calcularPlazoMax() {
         int salida=30;
-        int calculo=(Integer)(getNumPaginas()/50)+(cantTotalEjemp()*2);
+        int calculo=(Integer)(getNumPaginas()/50)+(cantTotalEjemp*2);
         if(calculo<salida){
             salida=calculo;
         }
