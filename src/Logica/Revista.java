@@ -4,7 +4,7 @@ public class Revista extends Publicacion {
     private int anno;
     private int numero;
 
-    public Revista(String id, String titulo, String materia, String numPaginas, int anno, int numero) {
+    public Revista(String id, String titulo, String materia, int numPaginas, int anno, int numero) {
         super(id, titulo, materia, numPaginas);
         setAnno(anno);
         setNumero(numero);
@@ -29,7 +29,7 @@ public class Revista extends Publicacion {
     @Override
     public int calcularPlazoMax() {
         int salida=30;
-        int calculo=cantTotalEjemp()*2;
+        int calculo=cantTotalEjemp*2;
         if(calculo<salida){
             salida=calculo;
         }
