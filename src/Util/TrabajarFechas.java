@@ -12,6 +12,11 @@ public class TrabajarFechas {
             return nuevaFecha;
     }
 
+    public static int restarDias(Date inicio, Date fin) {
+        long diferencia = fin.getTime() - inicio.getTime();
+        return (int) (diferencia / (1000 * 60 * 60 * 24)); // Convertir milisegundos a días
+    }
+
     public static int cantDiasEntreFechas(Date inicio, Date fin) {
         long diferencia = fin.getTime() - inicio.getTime();
         return (int) (diferencia / (1000 * 60 * 60 * 24)); // Convertir milisegundos a días
@@ -39,5 +44,13 @@ public class TrabajarFechas {
     public static Date calcLimitePenalizacion(Date fechaInicio, Date fechaFin) {
         int cantidad = cantDiasEntreFechas(fechaInicio, fechaFin);
         return sumarDias(fechaFin, cantidad*3);
+    }
+
+    public static boolean compararMesAnno(int mes, int anno, Date fecha) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha);
+        int mesFecha = calendar.get(Calendar.MONTH) + 1; // Los meses en Calendar son 0-11
+        int annoFecha = calendar.get(Calendar.YEAR);
+        return (mes == mesFecha && anno == annoFecha);
     }
 }

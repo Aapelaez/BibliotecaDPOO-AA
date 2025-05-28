@@ -18,6 +18,10 @@ public class Trabajador extends Persona{
         return nivelEscolar;
     }
 
+    public boolean compareTo(String id) {
+        return this.getId().equals(id);
+    }
+
     public void setNivelEscolar(String nivelEscolar) {
         this.nivelEscolar = nivelEscolar;
     }

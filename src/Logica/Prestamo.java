@@ -25,13 +25,35 @@ public class Prestamo {
         setEstado(EstadoPrestamo.NoEntregado);
     }
 
-    public boolean compareTo(String idPublicacion) {
-        return this.publicacion.compareTo(idPublicacion);
+    public boolean compareTo(String idPublicacion, String idTrabajador, Date fechaConcepcion, String numUsuario) {
+        boolean salida=false;
+        if( idPublicacion != null && idTrabajador != null && fechaConcepcion != null && numUsuario != null) {
+            if(this.publicacion.compareTo(idPublicacion)){
+                if(this.idTrabajador.equals(idTrabajador)){
+                    if(this.fechaConcepcion.equals(fechaConcepcion)){
+                        if(this.usuario.getNumUsuario().equals(numUsuario)){
+                            salida= true;
+                        }
+                    }
+                }
+            }
+        }
+        return salida;
     }
-    public void actualizarFechaEntregado(Date fechaEntregado) {
-        if (fechaEntregado != null) {
-            if (!fechaEntregado.before(fechaConcepcion)) {
-                setFechaEntregado(fechaEntregado);
+
+    public boolean compareTo(Prestamo p){
+        boolean salida=false;
+        if(p != null) {
+            if(compareTo(p.getPublicacion().getId(), p.getIdTrabajador(), p.getFechaConcepcion(), p.getUsuario().getNumUsuario())) {
+                salida = true;
+            }
+        }
+        return salida;
+    }
+    public void actualizarFechaEntregado(Date fechaEnt) {
+        if(fechaEnt!=null) {
+            if (!fechaEnt.before(fechaConcepcion)) {
+                setFechaEntregado(fechaEnt);
                 if (fechaEntregado.after(fechaLimite)) {
                     setEstado(EstadoPrestamo.EntregadoFueraDeTiempo);
                 } else {
@@ -48,6 +70,18 @@ public class Prestamo {
             salida= sumarDias(fechaEntregado, demora);
         }
             return salida;
+    }
+
+    public Prestamo encontrarPrestNoEntregado(String idPublicacion, String numUsuario) {
+        Prestamo salida = null;
+        if (idPublicacion != null && numUsuario != null) {
+            if (getUsuario().getNumUsuario().equals(numUsuario) && getPublicacion().compareTo(idPublicacion)) {
+                if (getEstado() == EstadoPrestamo.NoEntregado || getEstado() == EstadoPrestamo.NoEntregadoFueraDeTiempo) {
+                    salida = this;
+                }
+            }
+        }
+        return salida;
     }
 
     public Date getFechaConcepcion() {
@@ -68,17 +102,19 @@ public class Prestamo {
 
     public boolean esProrrogable(){
         boolean salida= false;
-        if(!prorrogado&&getEstado() == EstadoPrestamo.NoEntregado)){
+        if(!prorrogado&&getEstado() == EstadoPrestamo.NoEntregado){
         salida=true;
     }
     return salida;
     }
-    public void actualizarProrroga(){
-        if(esProrrogable()) {
-            setProrrogado(true);
-            setFechaLimite(aumentarFechaFinEnMitadDelIntervalo(fechaConcepcion, fechaLimite));
+    public void actualizarProrroga(int cantDias){
+        if(esProrrogable()&& cantDias>0) {
+            if (cantDias <= restarDias(aumentarFechaFinEnMitadDelIntervalo(fechaConcepcion, fechaLimite), fechaLimite)) {
+                setProrrogado(true);
+                setFechaLimite(sumarDias(fechaLimite, cantDias));
+            }
         }/* Excepcion no se puede prorrogar un préstamo que ya ha sido prorrogado
-        o que ya ha sido entregado, o este fuera de tiempo */
+        o que ya ha sido entregado, o este fuera de tiempo, o supera la cant permitida */
     }
 
     public Usuario getUsuario() {

@@ -39,16 +39,8 @@ public class Usuario extends Persona {
         this.fechaAcreditacion = fechaAcreditacion;
     }
 
-    public void solicitarPrestamo(String idPublicacion) {
-        //Aqui se le solicita a la biblioteca el préstamo de una publicación
-    }
-
-    public void devolverEjemplar(String idPublicacion) {
-        //Aqui se le devuelve a la biblioteca una publicación y ella la recibe
-    }
-
-    public void solicitarProrroga(Prestamo prestamo) {
-        //Aqui se le solicita a la biblioteca una prórroga de una publicación y ella revisa
+    public boolean compareTo(String numUsuario) {
+        return this.getNumUsuario().equals(numUsuario);
     }
 
     public boolean verificarCondicPrestamo(String idPublicacion) {
@@ -57,19 +49,17 @@ public class Usuario extends Persona {
         if(estaPenalizado()==null) {
             if (idPublicacion != null) {
                 torpedo = buscarTorpedoPersonal(new TorpedoUsuario(numUsuario, getMesActual(), getAnnoActual()));
-                if (torpedo!=null) {
+                if (torpedo != null) {
                     int i = 0;
-                    Prestamo prestamo = null;
+
                     while (i < torpedo.getPrestamos().size() && posible) {
-                        if (torpedo.getPrestamos().get(i).compareTo(idPublicacion)) {
-                            prestamo=torpedo.getPrestamos().get(i);
-                            if (prestamo.getEstado() == EstadoPrestamo.NoEntregado) {
+                        Prestamo prestamo = torpedo.getPrestamos().get(i);
+                        if (prestamo.encontrarPrestNoEntregado(idPublicacion, getNumUsuario()) != null) {
+                            posible = false;
+                        } else if (prestamo.getEstado() == EstadoPrestamo.EntregadoEnTiempo ||
+                                prestamo.getEstado() == EstadoPrestamo.EntregadoFueraDeTiempo) {
+                            if (cantDiasEntreFechas(prestamo.getFechaEntregado(), getFechaActual()) < 15) {
                                 posible = false;
-                            } else if (prestamo.getEstado() == EstadoPrestamo.EntregadoEnTiempo||
-                                    prestamo.getEstado() == EstadoPrestamo.EntregadoFueraDeTiempo) {
-                                if(cantDiasEntreFechas(prestamo.getFechaLimite(), getFechaActual()) < 15) {
-                                    posible = false;
-                                }
                             }
                         }
                         ++i;
@@ -77,6 +67,7 @@ public class Usuario extends Persona {
                 }
             }
         }
+
         return posible;
     }
 

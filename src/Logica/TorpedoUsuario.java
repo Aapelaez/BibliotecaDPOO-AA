@@ -57,4 +57,18 @@ public class TorpedoUsuario {
             this.prestamos.add(prestamo);
         }
     }
+
+    public Prestamo buscarPrestamo(Prestamo prestamo) {
+        Prestamo salida = null;
+        if (prestamo != null) {
+            int i=0;
+            while (salida == null && i < prestamos.size()) {
+                if (prestamos.get(i).compareTo(prestamo)) {
+                    salida = prestamos.get(i);
+                }
+                i++;
+            }
+        }
+        return salida;
+    }
 }

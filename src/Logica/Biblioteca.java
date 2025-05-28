@@ -78,10 +78,10 @@ public class Biblioteca {
         return torpedo;
     }
 
-    public TorpedoUsuario crearTorpedoUsuario(String idUsuario) {
+    public TorpedoUsuario crearTorpedoUsuario(String numUsuario) {
         TorpedoUsuario torpedo=null;
-        if (idUsuario!= null) {
-            torpedo = new TorpedoUsuario(idUsuario, TrabajarFechas.getMesActual(), TrabajarFechas.getAnnoActual());
+        if (numUsuario!= null) {
+            torpedo = new TorpedoUsuario(numUsuario, TrabajarFechas.getMesActual(), TrabajarFechas.getAnnoActual());
             torpedosUsuarios.add(torpedo);
         }
         return torpedo;
@@ -166,13 +166,12 @@ public class Biblioteca {
     public String getBibliotecaID() {
         return nombre + "_" + provincia + "_" + municipio;
     }
-    //public void agregarPublicacion como se hace
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    private void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
@@ -180,7 +179,7 @@ public class Biblioteca {
         return provincia;
     }
 
-    public void setProvincia(String provincia) {
+    private void setProvincia(String provincia) {
         this.provincia = provincia;
     }
 
@@ -188,7 +187,7 @@ public class Biblioteca {
         return municipio;
     }
 
-    public void setMunicipio(String municipio) {
+    private void setMunicipio(String municipio) {
         this.municipio = municipio;
     }
 
@@ -196,7 +195,7 @@ public class Biblioteca {
         return horario;
     }
 
-    public void setHorario(String horario) {
+    private void setHorario(String horario) {
         this.horario = horario;
     }
 
@@ -204,7 +203,7 @@ public class Biblioteca {
         return nombAdmin;
     }
 
-    public void setNombAdmin(String nombAdmin) {
+    private void setNombAdmin(String nombAdmin) {
         this.nombAdmin = nombAdmin;
     }
 
@@ -212,7 +211,7 @@ public class Biblioteca {
         return annosCargo;
     }
 
-    public void setAnnosCargo(int annosCargo) {
+    private void setAnnosCargo(int annosCargo) {
         this.annosCargo = annosCargo;
     }
 
@@ -238,5 +237,156 @@ public class Biblioteca {
 
     public ArrayList<RegistroPrestamo> getRegistroPrestamos() {
         return registroPrestamos;
+    }
+
+    public void recibirDevolucion(Prestamo p) {
+        if (p != null) {
+            p.actualizarFechaEntregado(TrabajarFechas.getFechaActual());
+        }
+    }
+
+    public void procesarProrroga(Prestamo prestamo, Date fechaProrroga) {
+        if (prestamo != null && fechaProrroga != null) {
+            int cantDias=cantDiasEntreFechas(prestamo.getFechaLimite(), fechaProrroga);
+            prestamo.actualizarProrroga(cantDias);
+        }
+    }
+
+    //REPORTES
+    //Para mostrar datos de préstamo de ejemplares prestados de una publicación en un mes
+    public ArrayList<Prestamo> datosPrestamosPublMes(String idPublicacion, int mes, int anno) {
+    ArrayList<Prestamo> prestamosPublicacion = new ArrayList<>();
+        for (Prestamo prestamo : prestamos) {
+            if (prestamo.getPublicacion().compareTo(idPublicacion) && compararMesAnno(mes, anno, prestamo.getFechaConcepcion())) {
+                prestamosPublicacion.add(prestamo);
+            }
+        }
+        return prestamosPublicacion;
+    }
+
+    //Prestamos proximos a vencer
+    public ArrayList<Prestamo> proximosVencer(){
+        ArrayList<Prestamo> proximos = new ArrayList<>();
+        Date fechaActual = getFechaActual();
+        for (Prestamo prestamo : prestamos) {
+            if (prestamo.getFechaLimite() != null && prestamo.getFechaLimite().after(fechaActual) &&
+                cantDiasEntreFechas(fechaActual, prestamo.getFechaLimite()) <= 5) {
+                proximos.add(prestamo);
+            }
+        }
+        return proximos;
+    }
+
+    //Prestamos vencidos
+    public ArrayList<Prestamo> prestamosVencidos() {
+        ArrayList<Prestamo> vencidos = new ArrayList<>();
+        Date fechaActual = getFechaActual();
+        for (Prestamo prestamo : prestamos) {
+            if (prestamo.getFechaLimite() != null && prestamo.getFechaLimite().before(fechaActual) &&
+                prestamo.getEstado() == EstadoPrestamo.NoEntregadoFueraDeTiempo) {
+                vencidos.add(prestamo);
+            }
+        }
+        return vencidos;
+    }
+
+    //Usuarios acreditados en un mes
+    public ArrayList<Usuario> usuariosAcreditadosMes(int mes, int anno) {
+        ArrayList<Usuario> usuariosAcreditados = new ArrayList<>();
+        for (Usuario usuario : usuarios) {
+            if(compararMesAnno(getMesActual(),getAnnoActual(),usuario.getFechaAcreditacion())){
+                usuariosAcreditados.add(usuario);
+            }
+        }
+        return usuariosAcreditados;
+    }
+
+    //Usuarios penalizados
+    public ArrayList<Usuario> usuariosPenalizados() {
+        ArrayList<Usuario> penalizados = new ArrayList<>();
+        for (Usuario usuario : usuarios) {
+            if (usuario.estaPenalizado() != null) {
+                penalizados.add(usuario);
+            }
+        }
+        return penalizados;
+    }
+
+    //Usuarios con prestamos activos
+    public ArrayList<Usuario> usuariosConPrestamosActivos() {
+        ArrayList<Usuario> activos = new ArrayList<>();
+        for (Usuario usuario : usuarios) {
+            TorpedoUsuario torpedo = usuario.buscarTorpedoPersonal(new TorpedoUsuario(usuario.getNumUsuario(), getMesActual(), getAnnoActual()));
+            if (torpedo != null) {
+                int count=0;
+                for(Prestamo prestamo : torpedo.getPrestamos()) {
+                    if(prestamo.getEstado() == EstadoPrestamo.NoEntregado ||
+                       prestamo.getEstado() == EstadoPrestamo.NoEntregadoFueraDeTiempo) {
+                        count++;
+                    }
+                }
+                if(count > 0) {
+                    activos.add(usuario);
+                }
+            }
+        }
+        return activos;
+    }
+
+    //Cantidad de prestamos aprobados por trabajador en un mes
+    public ArrayList<Trabajador> prestamosAprobadosPorTrabajador(int mes, int anno) {
+        ArrayList<Trabajador> trabajadoresConPrestamos = new ArrayList<>();
+        for (Trabajador trabajador : trabajadores) {
+            int count = 0;
+            for (Prestamo prestamo : prestamos) {
+                if (prestamo.getIdTrabajador().equals(trabajador.getId()) &&
+                    compararMesAnno(mes, anno, prestamo.getFechaConcepcion())) {
+                    count++;
+                }
+            }
+            if (count > 0) {
+                trabajadoresConPrestamos.add(trabajador);
+            }
+        }
+        return trabajadoresConPrestamos;
+    }
+
+    public Trabajador buscarTrabajador(String id) {
+        Trabajador trabajador = null;
+        int i = 0;
+        while (trabajador == null && i < trabajadores.size()) {
+            if (trabajadores.get(i).compareTo(id)) {
+                trabajador = trabajadores.get(i);
+            }
+            i++;
+        }
+        return trabajador;
+    }
+
+    public void contratarTrabajador(String id, String nombre, String apellido, String cargo,
+                                    int edad, char genero, String telefono, String email, String nivelEscolar) {
+        if (buscarTrabajador(id) == null) {
+            Trabajador t = new Trabajador(id, nombre, apellido, edad, genero, nivelEscolar, cargo, getFechaActual());
+            trabajadores.add(t);
+        }
+    }
+
+    public Usuario buscarUsuario(String numUsuario) {
+        Usuario usuario = null;
+        int i = 0;
+        while (usuario == null && i < usuarios.size()) {
+            if (usuarios.get(i).getNumUsuario().equals(numUsuario)) {
+                usuario = usuarios.get(i);
+            }
+            i++;
+        }
+        return usuario;
+    }
+
+    public void registrarUsuario(String id, String nombre, String apellido, int edad, char genero, String numUsuario) {
+        if (buscarUsuario(numUsuario) == null) {
+            Usuario usuario = new Usuario(id, nombre, apellido, edad, genero, numUsuario, getFechaActual());
+            usuarios.add(usuario);
+        }
     }
 }
