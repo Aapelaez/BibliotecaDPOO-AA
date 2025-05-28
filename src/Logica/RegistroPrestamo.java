@@ -16,6 +16,7 @@ public class RegistroPrestamo {
     public boolean compareTo(int mes, int anno, String idPublicacion) {
         return (this.mes == mes && this.anno == anno && this.idPublicacion.equals(idPublicacion));
     }
+
     public void incrementarCantidad() {
         this.cantidad++;
     }
