@@ -1,5 +1,7 @@
 package Logica;
 
+import Util.TrabajarFechas;
+
 import java.util.ArrayList;
 
 public class TorpedoUsuario {
@@ -15,8 +17,11 @@ public class TorpedoUsuario {
         this.prestamos = new ArrayList<Prestamo>();
     }
 
-    public boolean compareTo(String idUsuario) {
+    public boolean compareTo(String idUsuario, int mes, int anno) {
         return this.idUsuario.equals(idUsuario);
+    }
+    public boolean torpedoVigente() {
+        return (this.mes == TrabajarFechas.getMesActual() && this.anno == TrabajarFechas.getAnnoActual());
     }
 
     public String getIdUsuario() {

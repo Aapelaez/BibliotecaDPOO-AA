@@ -5,7 +5,7 @@ import java.util.Date;
 
 import Util.TrabajarFechas;
 
-import static Util.TrabajarFechas.sumarDias;
+import static Util.TrabajarFechas.*;
 
 public class Biblioteca {
     private String nombre;
@@ -59,18 +59,18 @@ public class Biblioteca {
         RegistroPrestamo registro = null;
         int i = 0;
         while (registro == null && i<registroPrestamos.size()) {
-            if (registroPrestamos.get(i).getIdPublicacion().equals(idPublicacion)) {
+            if (registroPrestamos.get(i).compareTo(getMesActual(), getAnnoActual(), idPublicacion)) {
                 registro = registroPrestamos.get(i);
             }
         }
         return registro;
     }
 
-    public TorpedoUsuario buscarTorpedo(String idUsuario){
+    public TorpedoUsuario buscarTorpedo(String numUsuario){
         TorpedoUsuario torpedo = null;
         int i = 0;
         while (torpedo == null && i < torpedosUsuarios.size()) {
-            if (torpedosUsuarios.get(i).compareTo(idUsuario)&& torpedosUsuarios.get(i).getMes() == TrabajarFechas.getMesActual() && torpedosUsuarios.get(i).getAnno() == TrabajarFechas.getAnnoActual()) {
+            if (torpedosUsuarios.get(i).compareTo(numUsuario, getMesActual(), getAnnoActual())) {
                 torpedo = torpedosUsuarios.get(i);
             }
             i++;
@@ -87,12 +87,20 @@ public class Biblioteca {
         return torpedo;
     }
 
-    public boolean puedePrestar(String idPublicacion, Usuario usuario) {
+    public RegistroPrestamo crearRegistroPrestamo(String idPublicacion) {
+        RegistroPrestamo registro = null;
+        if (idPublicacion != null) {
+            registro = new RegistroPrestamo(TrabajarFechas.getMesActual(), TrabajarFechas.getAnnoActual(), idPublicacion);
+            registroPrestamos.add(registro);
+        }
+        return registro;
+    }
+
+    public boolean puedePrestarCant(String idPublicacion, Usuario usuario) {
         boolean salida=false;
         Publicacion publicacion = buscarPublicacion(idPublicacion);
         if (publicacion != null) {
             if(cantEjempDisponibles(idPublicacion) > 2) {
-                if()
                 salida = true;
             }
         }
@@ -101,22 +109,36 @@ public class Biblioteca {
 
     public void atenderPrestamo(String idPublicacion, Usuario usuario, String idTrabajador) {
         Publicacion publicacion = buscarPublicacion(idPublicacion);
-        if (puedePrestar(idPublicacion, usuario)) {
-            Prestamo prestamo = new Prestamo(new Date(), sumarDias(new Date(),publicacion.calcularPlazoMax()), usuario, idTrabajador, publicacion);
-            prestamos.add(prestamo);
-            if(buscarRegistroPrestamo(idPublicacion) != null) {
-                buscarRegistroPrestamo(idPublicacion).incrementarCantidad();
-            } else {
-                RegistroPrestamo registro = new RegistroPrestamo(TrabajarFechas.getMesActual(), TrabajarFechas.getAnnoActual(), idPublicacion);
-                registroPrestamos.add(registro);
-            }
-            if(buscarTorpedo(usuario.getId())!=null){
-                TorpedoUsuario t= buscarTorpedo(usuario.getId());
-                t.addPrestamo(prestamo);
-            }else{
-                TorpedoUsuario t= crearTorpedoUsuario(usuario.getId());
-                if (t != null) {
-                    t.addPrestamo(prestamo);
+        if (publicacion != null && usuario != null && idTrabajador != null) {
+            if (puedePrestarCant(idPublicacion, usuario)) {
+                if (usuario.verificarCondicPrestamo(idPublicacion)) {
+                    Date fechaConcepcion = TrabajarFechas.getFechaActual();
+                    Date fechaLimite;
+                    if(publicacion.getClass().getSimpleName().equals("Libro")) {
+                        fechaLimite =sumarDias(fechaConcepcion, ((Libro)publicacion).calcularPlazoMax());
+                    } else if (publicacion.getClass().getSimpleName().equals("Articulo")) {
+                        fechaLimite =sumarDias(fechaConcepcion, ((Articulo)publicacion).calcularPlazoMax());
+                    }else{
+                        fechaLimite =sumarDias(fechaConcepcion, ((Revista)publicacion).calcularPlazoMax());
+                    }
+
+                    Prestamo prestamo = new Prestamo(fechaConcepcion, fechaLimite, usuario, idTrabajador, publicacion);
+                    prestamos.add(prestamo);
+                    RegistroPrestamo registro = buscarRegistroPrestamo(idPublicacion);
+                    if (registro == null) {
+                        registro = crearRegistroPrestamo(idPublicacion);
+                        registroPrestamos.add(registro);
+                    } else {
+                        registro.incrementarCantidad();
+                    }
+                    TorpedoUsuario torpedo = buscarTorpedo(usuario.getNumUsuario());
+                    if (torpedo == null) {
+                        torpedo = crearTorpedoUsuario(usuario.getId());
+                        torpedosUsuarios.add(torpedo);
+                        usuario.addTorpedo(torpedo);
+                    }else {
+                            torpedo.addPrestamo(prestamo);
+                        }
                 }
             }
         }

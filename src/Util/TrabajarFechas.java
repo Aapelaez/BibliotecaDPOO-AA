@@ -12,6 +12,11 @@ public class TrabajarFechas {
             return nuevaFecha;
     }
 
+    public static int cantDiasEntreFechas(Date inicio, Date fin) {
+        long diferencia = fin.getTime() - inicio.getTime();
+        return (int) (diferencia / (1000 * 60 * 60 * 24)); // Convertir milisegundos a días
+    }
+
     public static int getMesActual() {
         Calendar calendar = Calendar.getInstance();
         return calendar.get(Calendar.MONTH) + 1; // Los meses en Calendar son 0-11
@@ -19,5 +24,20 @@ public class TrabajarFechas {
     public static int getAnnoActual() {
         Calendar calendar = Calendar.getInstance();
         return calendar.get(Calendar.YEAR);
+    }
+
+    public static Date getFechaActual() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.getTime();
+    }
+
+    public static Date aumentarFechaFinEnMitadDelIntervalo(Date fechaInicio, Date fechaFin) {
+        int cantidad =cantDiasEntreFechas(fechaInicio, fechaFin);
+        return sumarDias(fechaInicio, cantidad / 2);
+    }
+
+    public static Date calcLimitePenalizacion(Date fechaInicio, Date fechaFin) {
+        int cantidad = cantDiasEntreFechas(fechaInicio, fechaFin);
+        return sumarDias(fechaFin, cantidad*3);
     }
 }
