@@ -11,15 +11,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
-public class ReportesPanel extends JPanel {
+public class PrestamosPanel extends JPanel {
 	private JTable table;
 	private JTextField textField;
 
 	/**
 	 * Create the panel.
 	 */
-	public ReportesPanel() {
+	public PrestamosPanel() {
 		setBackground(Color.WHITE);
 		setLayout(null);
 		
@@ -46,7 +47,8 @@ public class ReportesPanel extends JPanel {
 		scrollPane.setColumnHeaderView(table);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(ReportesPanel.class.getResource("/Icons/icons8-b\u00FAsqueda-30 (1).png")));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setIcon(new ImageIcon(PrestamosPanel.class.getResource("/Icons/icons8-b\u00FAsqueda-30 (1).png")));
 		lblNewLabel_1.setBounds(30, 150, 40, 40);
 		add(lblNewLabel_1);
 		

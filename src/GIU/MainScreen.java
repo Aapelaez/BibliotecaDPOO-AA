@@ -75,9 +75,9 @@ public class MainScreen extends JFrame {
 				
 				
 				JpContainer.removeAll();
-		        JpContainer.setLayout(new BorderLayout()); // Establecemos BorderLayout
+		        JpContainer.setLayout(new BorderLayout()); 
 		        HomePanel p1 = new HomePanel();
-		        JpContainer.add(p1, BorderLayout.CENTER); // Añadimos al centro
+		        JpContainer.add(p1, BorderLayout.CENTER); 
 		        JpContainer.revalidate();
 		        JpContainer.repaint();
 			}
@@ -99,6 +99,13 @@ public class MainScreen extends JFrame {
 				JlReportes.setForeground(Color.BLACK);
 				JlCerrarSesion.setForeground(Color.BLACK);
 				
+				JpContainer.removeAll();
+		        JpContainer.setLayout(new BorderLayout()); 
+		        PublicacionesPanel p1 = new PublicacionesPanel();
+		        JpContainer.add(p1, BorderLayout.CENTER); 
+		        JpContainer.revalidate();
+		        JpContainer.repaint();
+				
 			}
 		});
 		JlPublicaciones.setHorizontalAlignment(SwingConstants.CENTER);
@@ -118,9 +125,9 @@ public class MainScreen extends JFrame {
 				JlCerrarSesion.setForeground(Color.BLACK);
 				
 				JpContainer.removeAll();
-		        JpContainer.setLayout(new BorderLayout()); // Establecemos BorderLayout
-		        ReportesPanel p1 = new ReportesPanel();
-		        JpContainer.add(p1, BorderLayout.CENTER); // Añadimos al centro
+		        JpContainer.setLayout(new BorderLayout()); 
+		        PrestamosPanel p1 = new PrestamosPanel();
+		        JpContainer.add(p1, BorderLayout.CENTER); 
 		        JpContainer.revalidate();
 		        JpContainer.repaint();
 			}
@@ -140,6 +147,13 @@ public class MainScreen extends JFrame {
 				JlUsuarios.setForeground(Color.BLUE);
 				JlReportes.setForeground(Color.BLACK);
 				JlCerrarSesion.setForeground(Color.BLACK);
+				
+				JpContainer.removeAll();
+		        JpContainer.setLayout(new BorderLayout()); 
+		        UsuarioPanel p1 = new UsuarioPanel();
+		        JpContainer.add(p1, BorderLayout.CENTER); 
+		        JpContainer.revalidate();
+		        JpContainer.repaint();
 			}
 		});
 		JlUsuarios.setHorizontalAlignment(SwingConstants.CENTER);
