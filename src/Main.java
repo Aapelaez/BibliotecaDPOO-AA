@@ -1,8 +1,10 @@
+import GIU.LoginFrame;
 import Logica.Articulo;
 import Logica.Biblioteca;
 import Logica.TorpedoUsuario;
 import Logica.Usuario;
 
+import java.awt.EventQueue;
 import java.util.ArrayList;
 
 public class Main {
@@ -24,7 +26,18 @@ public class Main {
         TorpedoUsuario t=Biblioteca.getInstance().buscarTorpedo(u.getNumUsuario());
         System.out.println(t.getPrestamos().get(0).getEstado());
         ArrayList<Usuario> arr=Biblioteca.getInstance().usuariosAcreditadosMes(5,2025);
-        System.out.println("cant acredit: " + arr.size() + " " + arr.get(0).getNombre() + " y "+ arr.get(1).getNombre());
+        //System.out.println("cant acredit: " + arr.size() + " " + arr.get(0).getNombre() + " y "+ arr.get(1).getNombre());
+        
+        EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					LoginFrame frame = new LoginFrame();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
     }
 }
