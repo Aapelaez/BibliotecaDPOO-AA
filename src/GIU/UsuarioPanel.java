@@ -16,14 +16,20 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 
-import Logica.AddUsuario;
+import GIU.AddUsuario;
+import Logica.Biblioteca;
+import Logica.Publicacion;
+import Logica.Usuario;
+import Util.TrabajarFechas;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.Arrays;
+import java.util.List;
 
 public class UsuarioPanel extends JPanel {
 	private JTextField textField;
-	private JTable table;
+	private CustomTable customTable;
 
 	/**
 	 * Create the panel.
@@ -59,9 +65,31 @@ public class UsuarioPanel extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(30, 195, 1588, 534);
 		add(scrollPane);
-		
-		table = new JTable();
-		scrollPane.setColumnHeaderView(table);
+		List<String> columns = Arrays.asList(
+				"CI", "N. Usuario", "Nombre", "Género", "F. Acreditac",
+				"Prest. Activ"
+		);
+
+		try {
+			List<Usuario> usuarios = Biblioteca.getInstance().getUsuarios();
+			Object[][] data = new Object[usuarios.size()][6];
+			int pos = 0;
+			for (Usuario u : usuarios) {
+				Object[] row = {u.getId(), u.getNumUsuario(), u.getNombre()+" "+u.getApellidos(),
+						u.getGenero(), TrabajarFechas.formatearFecha(u.getFechaAcreditacion()), u.getTorpedos().size()};
+				//Cambiar torpedo por prestamos activos
+				data[pos] = row;
+				pos++;
+
+			}
+			customTable = new CustomTable(columns, data);
+			customTable.getTableHeader().setReorderingAllowed(false);
+
+			scrollPane.setViewportView(customTable);
+			scrollPane.setColumnHeaderView(customTable.getTableHeader());
+		}catch (Exception e){
+			throw new RuntimeException(e);
+		}
 		
 		JLabel label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);

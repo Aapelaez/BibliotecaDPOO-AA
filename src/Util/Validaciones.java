@@ -1,5 +1,9 @@
 package Util;
 
+import Logica.Libro;
+import Logica.Publicacion;
+import Logica.Revista;
+
 import java.util.regex.Pattern;
 
 public class Validaciones {
@@ -91,5 +95,19 @@ public class Validaciones {
 
     public static boolean esTextoValido(String texto) {
         return texto != null && !texto.isEmpty() && PATRON_TEXTO_VALIDO.matcher(texto).matches();
+    }
+
+    public static String clasificarPublicacion(Publicacion p){
+        String clasificado = "";
+        if (p!=null){
+            if(p instanceof Libro){
+                clasificado = "Libro";
+            } else if (p instanceof Revista) {
+                clasificado = "Revista";
+            }else{
+                clasificado="Artículo";
+            }
+        }
+        return clasificado;
     }
 }

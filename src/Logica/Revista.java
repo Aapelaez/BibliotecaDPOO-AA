@@ -4,8 +4,8 @@ public class Revista extends Publicacion {
     private int anno;
     private int numero;
 
-    public Revista(String id, String titulo, String materia, int numPaginas, int anno, int numero, int ejemplares) {
-        super(id, titulo, materia, numPaginas,ejemplares);
+    public Revista(String id, String titulo, String materia, int numPaginas, int anno, int numero, int ejemplares, boolean estado) {
+        super(id, titulo, materia, numPaginas,ejemplares, estado);
         setAnno(anno);
         setNumero(numero);
     }

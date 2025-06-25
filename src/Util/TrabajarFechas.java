@@ -86,4 +86,13 @@ public class TrabajarFechas {
 
         return Period.between(nacimiento, actual).getYears();
     }
+
+    public static String formatearFecha(Date fecha) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha);
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+        int mes = calendar.get(Calendar.MONTH) + 1; // Los meses en Calendar son 0-11
+        int anno = calendar.get(Calendar.YEAR);
+        return String.format("%02d/%02d/%04d", dia, mes, anno);
+    }
 }

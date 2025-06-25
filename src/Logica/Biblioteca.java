@@ -105,21 +105,21 @@ public class Biblioteca {
         return registro;
     }
 
-    public void agregarLibro(String id,String titulo, String materia, int pag, String editorial, int ejempares){
+    public void agregarLibro(String id,String titulo, String materia, int pag, boolean estado, String editorial, int ejemplares){
         if (buscarPublicacion(id)==null){
-        publicaciones.add(new Libro(id,titulo,materia,pag,editorial, ejempares));
+        publicaciones.add(new Libro(id,titulo,materia,pag,editorial, ejemplares, estado));
         }
     }
 
-    public void agregrarRevista(String id,String titulo, String materia, int pag, int anno, int numero, int ejemplares){
+    public void agregrarRevista(String id,String titulo, String materia, int pag, boolean estado, int anno, int numero, int ejemplares){
         if(buscarPublicacion(id)==null){
-            publicaciones.add(new Revista(id,titulo,materia,pag,anno,numero, ejemplares));
+            publicaciones.add(new Revista(id,titulo,materia,pag,anno,numero, ejemplares, estado));
         }
     }
 
-    public void agregrarArticulo(String id,String titulo, String materia, int pag, int ejemp){
+    public void agregrarArticulo(String id,String titulo, String materia, int pag, int ejemp, boolean estado, ArrayList<String> arbitros){
         if(buscarPublicacion(id)==null) {
-                publicaciones.add(new Articulo(id, titulo, materia, pag, ejemp));
+                publicaciones.add(new Articulo(id, titulo, materia, pag, ejemp, estado, arbitros));
         }
     }
 
@@ -291,7 +291,8 @@ public class Biblioteca {
     }
 
     //Prestamos proximos a vencer
-    public ArrayList<Prestamo> proximosVencer(int d){
+    public ArrayList<Prestamo> proximosVencer(){
+        int d= 7; // Días para considerar un préstamo próximo a vencer
         ArrayList<Prestamo> proximos = new ArrayList<>();
         Date fechaActual = getFechaActual();
         for (Prestamo prestamo : prestamos) {
@@ -302,18 +303,21 @@ public class Biblioteca {
         }
         return proximos;
     }
+    public int estadisticaReporte1(){
+        return proximosVencer().size();
+    }
 
     //Prestamos vencidos
-    public ArrayList<Prestamo> prestamosVencidos() {
-        ArrayList<Prestamo> vencidos = new ArrayList<>();
+    public int prestamosVencidos() {
+        int count=0;
         Date fechaActual = getFechaActual();
         for (Prestamo prestamo : prestamos) {
             if (prestamo.getFechaLimite() != null && prestamo.getFechaLimite().before(fechaActual) &&
                 prestamo.getEstado() == EstadoPrestamo.NoEntregadoFueraDeTiempo) {
-                vencidos.add(prestamo);
+                count++;
             }
         }
-        return vencidos;
+        return count;
     }
 
     //Usuarios acreditados en un mes
@@ -337,26 +341,20 @@ public class Biblioteca {
         }
         return penalizados;
     }
+    public int estadisticaReporte3() {
+        return usuariosPenalizados().size();
+    }
 
-    //Usuarios con prestamos activos
-    public ArrayList<Usuario> usuariosConPrestamosActivos() {
-        ArrayList<Usuario> activos = new ArrayList<>();
-        for (Usuario usuario : usuarios) {
-            TorpedoUsuario torpedo = usuario.buscarTorpedoPersonal(new TorpedoUsuario(usuario.getNumUsuario(), getMesActual(), getAnnoActual()));
-            if (torpedo != null) {
-                int count=0;
-                for(Prestamo prestamo : torpedo.getPrestamos()) {
-                    if(prestamo.getEstado() == EstadoPrestamo.NoEntregado ||
-                       prestamo.getEstado() == EstadoPrestamo.NoEntregadoFueraDeTiempo) {
-                        count++;
+    //Prestamos activos
+    public int prestamosActivos() {
+        int count = 0;
+        for (Prestamo p : prestamos) {
+            if(p.getEstado() == EstadoPrestamo.NoEntregado ||
+            p.getEstado() == EstadoPrestamo.NoEntregadoFueraDeTiempo) {
+                 count++;
                     }
                 }
-                if(count > 0) {
-                    activos.add(usuario);
-                }
-            }
-        }
-        return activos;
+        return count;
     }
 
     //Cantidad de prestamos aprobados por trabajador en un mes
@@ -375,6 +373,32 @@ public class Biblioteca {
             }
         }
         return trabajadoresConPrestamos;
+    }
+
+    public ArrayList<Publicacion> publicacionesMasPrestadas() {
+        ArrayList<Publicacion> masPrestadas = new ArrayList<Publicacion>();
+        int maxCount = 0;
+        for (RegistroPrestamo registroPrestamo : registroPrestamos) {
+            if (registroPrestamo.getMes() == getMesActual() && registroPrestamo.getAnno() == getAnnoActual()) {
+                for (Publicacion publicacion : publicaciones) {
+                    if (publicacion.compareTo(registroPrestamo.getIdPublicacion())) {
+                        int count = registroPrestamo.getCantidad();
+                        if (count > maxCount) {
+                            masPrestadas.clear();
+                            masPrestadas.add(publicacion);
+                            maxCount = count;
+                        } else if (count == maxCount) {
+                            masPrestadas.add(publicacion);
+                        }
+                    }
+                }
+            }
+        }
+
+            return masPrestadas;
+    }
+    public int estadisticaReporte2() {
+        return publicacionesMasPrestadas().size();
     }
 
     public Trabajador buscarTrabajador(String id) {

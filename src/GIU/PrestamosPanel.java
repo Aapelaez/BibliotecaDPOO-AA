@@ -1,5 +1,9 @@
 package GIU;
 
+import Logica.Biblioteca;
+import Logica.Prestamo;
+import Logica.Publicacion;
+
 import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -7,14 +11,18 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.Arrays;
+import java.util.List;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import static Util.TrabajarFechas.formatearFecha;
+
 public class PrestamosPanel extends JPanel {
-	private JTable table;
+	private CustomTable customTable;
 	private JTextField textField;
 
 	/**
@@ -42,9 +50,31 @@ public class PrestamosPanel extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(30, 195, 1588, 534);
 		add(scrollPane);
-		
-		table = new JTable();
-		scrollPane.setColumnHeaderView(table);
+
+		List<String> columns = Arrays.asList(
+				"F. Concep", "F. Límite", "F. Entreg", "Usuario",
+				"Trabajador", "Prórrogado", "Estado"
+		);
+
+		try {
+			List<Prestamo> prestamos = Biblioteca.getInstance().getPrestamos();
+			Object[][] data = new Object[prestamos.size()][7];
+			int pos = 0;
+			for (Prestamo p : prestamos) {
+				Object[] row = {formatearFecha(p.getFechaConcepcion()), formatearFecha(p.getFechaLimite()), p.getFechaEntregado() != null ? formatearFecha(p.getFechaEntregado()) : "Pendiente",
+						p.getUsuario().getNombre(), p.getIdTrabajador(), p.isProrrogado(), p.getEstado().toString()};
+				data[pos] = row;
+				pos++;
+
+			}
+			customTable = new CustomTable(columns, data);
+			customTable.getTableHeader().setReorderingAllowed(false);
+
+			scrollPane.setViewportView(customTable);
+			scrollPane.setColumnHeaderView(customTable.getTableHeader());
+		}catch (Exception e){
+			throw new RuntimeException(e);
+		}
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);

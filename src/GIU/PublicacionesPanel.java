@@ -1,13 +1,14 @@
 package GIU;
 
+import Logica.Biblioteca;
+import Logica.Publicacion;
+
 import javax.swing.JPanel;
-
 import java.awt.Color;
-
 import javax.swing.JLabel;
-
 import java.awt.Font;
-
+import java.util.Arrays;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.ImageIcon;
@@ -15,12 +16,9 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 public class PublicacionesPanel extends JPanel {
 	private JTextField textField;
-	private JTable table;
+	private CustomTable customTable;
 
 	/**
 	 * Create the panel.
@@ -35,17 +33,6 @@ public class PublicacionesPanel extends JPanel {
 		add(lblPublicaciones);
 		
 		JButton btnNuevaPublicacion = new JButton("Nueva Publicacion");
-		btnNuevaPublicacion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-					try {
-						AddPublicaciones frame = new AddPublicaciones();
-						frame.setVisible(true);
-						frame.setLocationRelativeTo(null);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-			}
-		});
 		btnNuevaPublicacion.setForeground(Color.WHITE);
 		btnNuevaPublicacion.setBackground(Color.BLUE);
 		btnNuevaPublicacion.setBounds(1390, 15, 228, 40);
@@ -54,9 +41,33 @@ public class PublicacionesPanel extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(30, 195, 1588, 534);
 		add(scrollPane);
-		
-		table = new JTable();
-		scrollPane.setColumnHeaderView(table);
+		List<String> columns = Arrays.asList(
+				"ID", "Título", "Tipo", "Materia",
+				"N. Páginas", "N. Ejempl", "Estado"
+
+		);
+
+		try {
+			List<Publicacion> publicaciones = Biblioteca.getInstance().getPublicaciones();
+			Object[][] data = new Object[publicaciones.size()][7];
+			int pos = 0;
+			for (Publicacion p : publicaciones) {
+				Object[] row = {p.getId(), p.getTitulo(), p.getClass().getSimpleName(),
+				p.getMateria(), p.getNumPaginas(), p.getCantTotalEjemp(), p.getEstado() ? "Disponible" : "Reservado"};
+				data[pos] = row;
+				pos++;
+
+			}
+			customTable = new CustomTable(columns, data);
+			customTable.getTableHeader().setReorderingAllowed(false);
+
+			scrollPane.setViewportView(customTable);
+			scrollPane.setColumnHeaderView(customTable.getTableHeader());
+		}catch (Exception e){
+		throw new RuntimeException(e);
+		}
+
+
 		
 		JLabel label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
