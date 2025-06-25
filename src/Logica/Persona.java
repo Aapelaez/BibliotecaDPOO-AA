@@ -4,14 +4,12 @@ public abstract class Persona {
     private String id;
     private String nombre;
     private String apellidos;
-    private int edad;
     private char genero;
 
-    public Persona(String id, String nombre, String apellidos, int edad, char genero) {
+    public Persona(String id, String nombre, String apellidos, char genero) {
         setId(id);
         setNombre(nombre);
         setApellidos(apellidos);
-        setEdad(edad);
         setGenero(genero);
     }
 
@@ -39,13 +37,7 @@ public abstract class Persona {
         this.apellidos = apellidos;
     }
 
-    public int getEdad() {
-        return edad;
-    }
-
-    public void setEdad(int edad) {
-        this.edad = edad;
-    }
+    public int getEdad() {return Util.TrabajarFechas.calcularEdad(id);}
 
     public char getGenero() {
         return genero;
