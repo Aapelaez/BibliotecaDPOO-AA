@@ -3,18 +3,18 @@ package Logica;
 import java.util.Date;
 
 public class Trabajador extends Persona{
-    private String nivelEscolar;
+    private NivelEscolar nivelEscolar;
     private String cargo;
     private Date fechaContratacion;
 
-    public Trabajador(String id, String nombre, String apellidos, int edad, char genero, String nivelEscolar, String cargo, Date fechaContratacion) {
-        super(id, nombre, apellidos, edad, genero);
+    public Trabajador(String id, String nombre, String apellidos, char genero, NivelEscolar nivelEscolar, String cargo, Date fechaContratacion) {
+        super(id, nombre, apellidos, genero);
         setNivelEscolar(nivelEscolar);
         setCargo(cargo);
         setFechaContratacion(fechaContratacion);
     }
 
-    public String getNivelEscolar() {
+    public NivelEscolar getNivelEscolar() {
         return nivelEscolar;
     }
 
@@ -22,7 +22,7 @@ public class Trabajador extends Persona{
         return this.getId().equals(id);
     }
 
-    public void setNivelEscolar(String nivelEscolar) {
+    public void setNivelEscolar(NivelEscolar nivelEscolar) {
         this.nivelEscolar = nivelEscolar;
     }
 

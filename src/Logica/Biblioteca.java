@@ -70,6 +70,7 @@ public class Biblioteca {
             if (registroPrestamos.get(i).compareTo(getMesActual(), getAnnoActual(), idPublicacion)) {
                 registro = registroPrestamos.get(i);
             }
+            i++;
         }
         return registro;
     }
@@ -388,10 +389,9 @@ public class Biblioteca {
         return trabajador;
     }
 
-    public void contratarTrabajador(String id, String nombre, String apellido, String cargo,
-                                    int edad, char genero, String telefono, String email, String nivelEscolar) {
+    public void contratarTrabajador(String id, String nombre, String apellido, String cargo, char genero, String telefono, String email, NivelEscolar nivelEscolar) {
         if (buscarTrabajador(id) == null) {
-            Trabajador t = new Trabajador(id, nombre, apellido, edad, genero, nivelEscolar, cargo, getFechaActual());
+            Trabajador t = new Trabajador(id, nombre, apellido, genero, nivelEscolar, cargo, getFechaActual());
             trabajadores.add(t);
         }
     }
@@ -408,9 +408,9 @@ public class Biblioteca {
         return usuario;
     }
 
-    public void registrarUsuario(String id, String nombre, String apellido, int edad, char genero, String numUsuario) {
+    public void registrarUsuario(String id, String nombre, String apellido, char genero, String numUsuario) {
         if (buscarUsuario(numUsuario) == null) {
-            Usuario usuario = new Usuario(id, nombre, apellido, edad, genero, numUsuario, getFechaActual());
+            Usuario usuario = new Usuario(id, nombre, apellido, genero, numUsuario, getFechaActual());
             usuarios.add(usuario);
         }
     }

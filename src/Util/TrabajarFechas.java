@@ -1,5 +1,7 @@
 package Util;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -64,5 +66,24 @@ public class TrabajarFechas {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(d);
         return calendar.get(Calendar.YEAR);
+    }
+
+    public static int calcularEdad(String carnet) {
+        String anno = carnet.substring(0, 2);
+        String siglo = carnet.substring(7, 8);
+        int annoCompleto = 0;
+
+        if (Integer.parseInt(siglo) >= 0 && Integer.parseInt(siglo) <= 5) {
+            annoCompleto = 1900 + Integer.parseInt(anno);
+        } else if (Integer.parseInt(siglo) >= 6 && Integer.parseInt(siglo) <= 8) {
+            annoCompleto = 2000 + Integer.parseInt(anno);
+        }
+        String mes = carnet.substring(2, 4);
+        String dia = carnet.substring(4, 6);
+
+        LocalDate nacimiento = LocalDate.of(annoCompleto, Integer.parseInt(mes), Integer.parseInt(dia));
+        LocalDate actual = LocalDate.now();
+
+        return Period.between(nacimiento, actual).getYears();
     }
 }

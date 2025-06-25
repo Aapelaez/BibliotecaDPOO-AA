@@ -6,13 +6,22 @@ public class Validaciones {
     private static final Pattern PATRON_TEXTO_VALIDO =
             Pattern.compile("^[\\p{L} .'-]+$");
 
-    public static boolean validarCarnet(String cadena) {
+    public static boolean validarCarnet(String cadena, char genero) {
         boolean valido = true;
         if(cadena!=null) {
             int longitud = cadena.length();
 
             if (!cadena.matches("\\d{11}")) {
                 valido= false;
+            }
+
+            String generoCadena = cadena.substring(10, 11);
+            //El dígito 10 es para el género. Es par cuando es masculino e impar cuando es femenino.
+            int compGenero = Integer.parseInt(generoCadena);
+            if(valido && compGenero%2==0 && genero == 'F') {
+                valido = false;
+            } else if (valido && compGenero%2==1 && genero == 'M') {
+                valido = false;
             }
 
             String siglo = cadena.substring(7, 8);

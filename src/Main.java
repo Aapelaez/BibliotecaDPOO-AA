@@ -1,15 +1,12 @@
-import Logica.Articulo;
-import Logica.Biblioteca;
-import Logica.TorpedoUsuario;
-import Logica.Usuario;
+import Logica.*;
 
 import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        Biblioteca.getInstance().registrarUsuario("04121668369","John", "Doe", 30, 'M', "U001");
-        Biblioteca.getInstance().registrarUsuario("04032468565","Eduardo", "Paz", 19, 'M', "U008");
-        Biblioteca.getInstance().contratarTrabajador("04082468369", "Jane", "Doe", "Bibliotecario", 33, 'F',"52222222", "jane@mailbroke.com","Universitario");
+        /*Biblioteca.getInstance().registrarUsuario("04121668369","John", "Doe", 'M', "U001");
+        Biblioteca.getInstance().registrarUsuario("04032468565","Eduardo", "Paz", 'M', "U008");
+        Biblioteca.getInstance().contratarTrabajador("04082468369", "Jane", "Doe", "Bibliotecario", 'F',"52222222", "jane@mailbroke.com", NivelEscolar.MedioSuperior);
         Biblioteca.getInstance().agregrarArticulo("art-001","La vida y la ciencia de la computación", "Ciencias",9, 12);
         Biblioteca.getInstance().agregrarArticulo("art-002","La influencia de la droga en la tercera edad", "Ciencias Sociales",9, 2);
         Biblioteca.getInstance().agregrarArticulo("art-002","La influencia de la droga en la tercera edad", "Ciencias Sociales",9, 2);
@@ -25,6 +22,15 @@ public class Main {
         System.out.println(t.getPrestamos().get(0).getEstado());
         ArrayList<Usuario> arr=Biblioteca.getInstance().usuariosAcreditadosMes(5,2025);
         System.out.println("cant acredit: " + arr.size() + " " + arr.get(0).getNombre() + " y "+ arr.get(1).getNombre());
+        */
 
+        Biblioteca biblioteca = Biblioteca.getInstance();
+        Util.Inicializar.inicializar();
+        for(Usuario usuario : biblioteca.getUsuarios()) {
+            System.out.println("Usuario: " + usuario.getNombre() + " " + usuario.getApellidos() + ", Número de Usuario: " + usuario.getNumUsuario());
+        }
+        for (Prestamo prestamo : biblioteca.getPrestamos()) {
+            System.out.println("Préstamo: " + prestamo.getPublicacion().getTitulo() + ", Usuario: " + prestamo.getUsuario().getNombre() + ", Fecha de Concepción: " + prestamo.getFechaConcepcion());
+        }
     }
 }

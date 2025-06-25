@@ -12,8 +12,8 @@ public class Usuario extends Persona {
     private Date fechaAcreditacion;
     private ArrayList<TorpedoUsuario> torpedos;
 
-    public Usuario(String id, String nombre, String apellidos, int edad, char genero, String numUsuario, Date fechaAcreditacion) {
-        super(id, nombre, apellidos, edad, genero);
+    public Usuario(String id, String nombre, String apellidos, char genero, String numUsuario, Date fechaAcreditacion) {
+        super(id, nombre, apellidos, genero);
         setNumUsuario(numUsuario);
         setFechaAcreditacion(fechaAcreditacion);
         this.torpedos = new ArrayList<TorpedoUsuario>();
