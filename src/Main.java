@@ -33,6 +33,7 @@ public class Main {
 				try {
 					LoginFrame frame = new LoginFrame();
 					frame.setVisible(true);
+					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

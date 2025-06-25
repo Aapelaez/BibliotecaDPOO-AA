@@ -1,15 +1,22 @@
 package GIU;
 
 import javax.swing.JPanel;
+
 import java.awt.Color;
+
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PublicacionesPanel extends JPanel {
 	private JTextField textField;
@@ -28,6 +35,17 @@ public class PublicacionesPanel extends JPanel {
 		add(lblPublicaciones);
 		
 		JButton btnNuevaPublicacion = new JButton("Nueva Publicacion");
+		btnNuevaPublicacion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+					try {
+						AddPublicaciones frame = new AddPublicaciones();
+						frame.setVisible(true);
+						frame.setLocationRelativeTo(null);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+			}
+		});
 		btnNuevaPublicacion.setForeground(Color.WHITE);
 		btnNuevaPublicacion.setBackground(Color.BLUE);
 		btnNuevaPublicacion.setBounds(1390, 15, 228, 40);

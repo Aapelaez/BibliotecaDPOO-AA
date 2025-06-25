@@ -26,22 +26,6 @@ public class MainScreen extends JFrame {
 	private JLabel JlPrestamos;
 	private JLabel JlUsuarios;
 	private JLabel JlReportes;
-	private JLabel JlCerrarSesion;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainScreen frame = new MainScreen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -71,8 +55,6 @@ public class MainScreen extends JFrame {
 				JlPrestamos.setForeground(Color.BLACK);
 				JlUsuarios.setForeground(Color.BLACK);
 				JlReportes.setForeground(Color.BLACK);
-				JlCerrarSesion.setForeground(Color.BLACK);
-				
 				
 				JpContainer.removeAll();
 		        JpContainer.setLayout(new BorderLayout()); 
@@ -97,7 +79,6 @@ public class MainScreen extends JFrame {
 				JlPrestamos.setForeground(Color.BLACK);
 				JlUsuarios.setForeground(Color.BLACK);
 				JlReportes.setForeground(Color.BLACK);
-				JlCerrarSesion.setForeground(Color.BLACK);
 				
 				JpContainer.removeAll();
 		        JpContainer.setLayout(new BorderLayout()); 
@@ -122,7 +103,6 @@ public class MainScreen extends JFrame {
 				JlPrestamos.setForeground(Color.BLUE);
 				JlUsuarios.setForeground(Color.BLACK);
 				JlReportes.setForeground(Color.BLACK);
-				JlCerrarSesion.setForeground(Color.BLACK);
 				
 				JpContainer.removeAll();
 		        JpContainer.setLayout(new BorderLayout()); 
@@ -146,7 +126,6 @@ public class MainScreen extends JFrame {
 				JlPrestamos.setForeground(Color.BLACK);
 				JlUsuarios.setForeground(Color.BLUE);
 				JlReportes.setForeground(Color.BLACK);
-				JlCerrarSesion.setForeground(Color.BLACK);
 				
 				JpContainer.removeAll();
 		        JpContainer.setLayout(new BorderLayout()); 
@@ -170,30 +149,19 @@ public class MainScreen extends JFrame {
 				JlPrestamos.setForeground(Color.BLACK);
 				JlUsuarios.setForeground(Color.BLACK);
 				JlReportes.setForeground(Color.BLUE);
-				JlCerrarSesion.setForeground(Color.BLACK);
+				
+				JpContainer.removeAll();
+		        JpContainer.setLayout(new BorderLayout()); 
+		        ReportesPanel p1 = new ReportesPanel();
+		        JpContainer.add(p1, BorderLayout.CENTER); 
+		        JpContainer.revalidate();
+		        JpContainer.repaint();
 			}
 		});
 		JlReportes.setHorizontalAlignment(SwingConstants.CENTER);
 		JlReportes.setFont(new Font("Tahoma", Font.BOLD, 24));
 		JlReportes.setBounds(0, 452, 200, 60);
 		panel.add(JlReportes);
-		
-		JlCerrarSesion = new JLabel("Cerrar Sesion");
-		JlCerrarSesion.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				JlHome.setForeground(Color.BLACK);
-				JlPublicaciones.setForeground(Color.BLACK);
-				JlPrestamos.setForeground(Color.BLACK);
-				JlUsuarios.setForeground(Color.BLACK);
-				JlReportes.setForeground(Color.BLACK);
-				JlCerrarSesion.setForeground(Color.BLUE);
-			}
-		});
-		JlCerrarSesion.setHorizontalAlignment(SwingConstants.CENTER);
-		JlCerrarSesion.setFont(new Font("Tahoma", Font.BOLD, 24));
-		JlCerrarSesion.setBounds(0, 528, 200, 60);
-		panel.add(JlCerrarSesion);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);

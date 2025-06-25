@@ -8,6 +8,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ReportesPanel extends JPanel {
 	private JTable table;
@@ -24,62 +26,112 @@ public class ReportesPanel extends JPanel {
 		lblReportes.setBounds(30, 15, 138, 30);
 		add(lblReportes);
 		
-		JPanel panel = new JPanel();
-		panel.setLayout(null);
-		panel.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
-		panel.setBounds(190, 84, 350, 150);
-		add(panel);
+		JPanel JpProVencer = new JPanel();
+		JpProVencer.setBackground(Color.WHITE);
+		JpProVencer.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+			}
+		});
+		JpProVencer.setLayout(null);
+		JpProVencer.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
+		JpProVencer.setBounds(190, 84, 350, 150);
+		add(JpProVencer);
 		
 		JLabel lblProximosAVencer = new JLabel("Proximos a vencer");
+		lblProximosAVencer.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
+		});
 		lblProximosAVencer.setIcon(new ImageIcon(ReportesPanel.class.getResource("/Icons/icons8-error-30.png")));
 		lblProximosAVencer.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblProximosAVencer.setBounds(15, 16, 221, 30);
-		panel.add(lblProximosAVencer);
+		JpProVencer.add(lblProximosAVencer);
 		
 		JLabel label_1 = new JLabel(" 340");
+		label_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
+		});
 		label_1.setFont(new Font("Yu Gothic UI", Font.BOLD, 24));
 		label_1.setBounds(25, 62, 69, 54);
-		panel.add(label_1);
+		JpProVencer.add(label_1);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setLayout(null);
-		panel_1.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
-		panel_1.setBounds(662, 84, 350, 150);
-		add(panel_1);
+		JPanel JpMPrestadas = new JPanel();
+		JpMPrestadas.setBackground(Color.WHITE);
+		JpMPrestadas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
+		});
+		JpMPrestadas.setLayout(null);
+		JpMPrestadas.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
+		JpMPrestadas.setBounds(662, 84, 350, 150);
+		add(JpMPrestadas);
 		
 		JLabel lblMasPrestadas = new JLabel("Mas Prestadas\r\n");
+		lblMasPrestadas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
+		});
 		lblMasPrestadas.setIcon(new ImageIcon(ReportesPanel.class.getResource("/Icons/icons8-estad\u00EDstica-30.png")));
 		lblMasPrestadas.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblMasPrestadas.setBounds(15, 16, 221, 30);
-		panel_1.add(lblMasPrestadas);
+		JpMPrestadas.add(lblMasPrestadas);
 		
 		JLabel label_2 = new JLabel(" 340");
+		label_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
+		});
 		label_2.setFont(new Font("Yu Gothic UI", Font.BOLD, 24));
 		label_2.setBounds(25, 62, 69, 54);
-		panel_1.add(label_2);
+		JpMPrestadas.add(label_2);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setLayout(null);
-		panel_2.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
-		panel_2.setBounds(1153, 84, 350, 150);
-		add(panel_2);
+		JPanel JpUserPenalizados = new JPanel();
+		JpUserPenalizados.setBackground(Color.WHITE);
+		JpUserPenalizados.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
+		});
+		JpUserPenalizados.setLayout(null);
+		JpUserPenalizados.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
+		JpUserPenalizados.setBounds(1153, 84, 350, 150);
+		add(JpUserPenalizados);
 		
-		JLabel label_3 = new JLabel("Proximos a vencer");
-		label_3.setIcon(new ImageIcon(ReportesPanel.class.getResource("/Icons/icons8-usuario-30 (1).png")));
-		label_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		label_3.setBounds(15, 16, 221, 30);
-		panel_2.add(label_3);
+		JLabel lblUsuariosPenalizados = new JLabel("Usuarios Penalizados");
+		lblUsuariosPenalizados.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
+		});
+		lblUsuariosPenalizados.setIcon(new ImageIcon(ReportesPanel.class.getResource("/Icons/icons8-usuario-30 (1).png")));
+		lblUsuariosPenalizados.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblUsuariosPenalizados.setBounds(15, 16, 221, 30);
+		JpUserPenalizados.add(lblUsuariosPenalizados);
 		
 		JLabel label_4 = new JLabel(" 340");
+		label_4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
+		});
 		label_4.setFont(new Font("Yu Gothic UI", Font.BOLD, 24));
 		label_4.setBounds(25, 62, 69, 54);
-		panel_2.add(label_4);
+		JpUserPenalizados.add(label_4);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(190, 277, 1313, 445);
 		add(scrollPane);
 		
 		table = new JTable();
+		table.setBackground(Color.WHITE);
 		scrollPane.setColumnHeaderView(table);
 
 	}
