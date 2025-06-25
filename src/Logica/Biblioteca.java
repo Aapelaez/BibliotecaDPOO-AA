@@ -291,6 +291,27 @@ public class Biblioteca {
         }
     }
 
+public void despedirTrabajador(String idTrabajador) {
+        Trabajador trabajador = buscarTrabajador(idTrabajador);
+        if (trabajador != null) {
+            trabajadores.remove(trabajador);
+        }
+    }
+
+    public void desactivarPublicacion(String idPublicacion) {
+        Publicacion publicacion = buscarPublicacion(idPublicacion);
+        if (publicacion != null&&publicacion.estado) {
+            publicacion.setEstado(false);
+        }
+    }
+
+    public void activarPublicacion(String idPublicacion) {
+        Publicacion publicacion = buscarPublicacion(idPublicacion);
+        if (publicacion != null&&!publicacion.estado) {
+            publicacion.setEstado(true);
+        }
+    }
+    
     //REPORTES
     //Para mostrar datos de préstamo de ejemplares prestados de una publicación en un mes
     public ArrayList<Prestamo> datosPrestamosPublMes(String idPublicacion, int mes, int anno) {
