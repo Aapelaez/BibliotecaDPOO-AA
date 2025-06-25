@@ -16,16 +16,20 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 
+
 import GIU.AddUsuario;
 import Logica.Biblioteca;
 import Logica.Publicacion;
 import Logica.Usuario;
 import Util.TrabajarFechas;
 
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.swing.table.DefaultTableModel;
 
 public class UsuarioPanel extends JPanel {
 	private JTextField textField;
@@ -65,6 +69,7 @@ public class UsuarioPanel extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(30, 195, 1588, 534);
 		add(scrollPane);
+
 		List<String> columns = Arrays.asList(
 				"CI", "N. Usuario", "Nombre", "Género", "F. Acreditac",
 				"Prest. Activ"
@@ -90,6 +95,7 @@ public class UsuarioPanel extends JPanel {
 		}catch (Exception e){
 			throw new RuntimeException(e);
 		}
+
 		
 		JLabel label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);

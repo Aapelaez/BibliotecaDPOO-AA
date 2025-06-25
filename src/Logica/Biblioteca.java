@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import Util.TrabajarFechas;
-
 import static Util.TrabajarFechas.*;
 
 public class Biblioteca {
@@ -104,21 +103,36 @@ public class Biblioteca {
         return registro;
     }
 
-    public void agregarLibro(String id,String titulo, String materia, int pag, boolean estado, String editorial, int ejemplares){
+
+    public void agregarLibro(String id,String titulo, String materia, int pag, String editorial, int ejempares, ArrayList<String> autores){
         if (buscarPublicacion(id)==null){
-        publicaciones.add(new Libro(id,titulo,materia,pag,editorial, ejemplares, estado));
+        	publicaciones.add(new Libro(id,titulo,materia,pag,editorial, ejempares,autores));
+        	throw new IllegalArgumentException("Publicacion a�adida correctamente");
+        }
+        else{
+        	throw new IllegalArgumentException("Ya existe el codigo de esta publicaci�n");
+
         }
     }
 
     public void agregrarRevista(String id,String titulo, String materia, int pag, boolean estado, int anno, int numero, int ejemplares){
         if(buscarPublicacion(id)==null){
-            publicaciones.add(new Revista(id,titulo,materia,pag,anno,numero, ejemplares, estado));
+            publicaciones.add(new Revista(id,titulo,materia,pag,anno,numero, ejemplares));
+            throw new IllegalArgumentException("Publicacion a�adida correctamente");
+        }
+        else{
+        	throw new IllegalArgumentException("Ya existe el codigo de esta publicaci�n");
         }
     }
 
-    public void agregrarArticulo(String id,String titulo, String materia, int pag, int ejemp, boolean estado, ArrayList<String> arbitros){
+    public void agregrarArticulo(String id,String titulo, String materia, int pag, int ejemp, ArrayList<String> arbitros){
         if(buscarPublicacion(id)==null) {
-                publicaciones.add(new Articulo(id, titulo, materia, pag, ejemp, estado, arbitros));
+                publicaciones.add(new Articulo(id, titulo, materia, pag, ejemp, arbitros));
+                throw new IllegalArgumentException("Publicacion a�adida correctamente");
+        }
+        else{
+        	throw new IllegalArgumentException("Ya existe el codigo de esta publicaci�n");
+
         }
     }
 
@@ -437,4 +451,5 @@ public class Biblioteca {
             usuarios.add(usuario);
         }
     }
+ 
 }

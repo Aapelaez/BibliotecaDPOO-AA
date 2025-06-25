@@ -6,9 +6,10 @@ public class Libro extends Publicacion {
     private ArrayList<String> autores;
     private String editorial;
 
-    public Libro(String id, String titulo, String materia, int numPaginas, String editorial, int ejemplares, boolean estado) {
-        super(id, titulo, materia, numPaginas,ejemplares, estado);
-        this.autores = new ArrayList<String>();
+
+    public Libro(String id, String titulo, String materia, int numPaginas, String editorial, int ejemplares,ArrayList<String> autores,boolean estado) {
+        super(id, titulo, materia, numPaginas,ejemplares,estado);
+        this.autores = autores;
         this.editorial = editorial;
     }
 

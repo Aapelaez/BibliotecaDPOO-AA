@@ -26,6 +26,7 @@ public class MainScreen extends JFrame {
 	private JLabel JlPrestamos;
 	private JLabel JlUsuarios;
 	private JLabel JlReportes;
+	private JLabel JlTrabajadores;
 
 	/**
 	 * Create the frame.
@@ -55,6 +56,7 @@ public class MainScreen extends JFrame {
 				JlPrestamos.setForeground(Color.BLACK);
 				JlUsuarios.setForeground(Color.BLACK);
 				JlReportes.setForeground(Color.BLACK);
+				JlTrabajadores.setForeground(Color.BLACK);
 				
 				JpContainer.removeAll();
 		        JpContainer.setLayout(new BorderLayout()); 
@@ -79,6 +81,7 @@ public class MainScreen extends JFrame {
 				JlPrestamos.setForeground(Color.BLACK);
 				JlUsuarios.setForeground(Color.BLACK);
 				JlReportes.setForeground(Color.BLACK);
+				JlTrabajadores.setForeground(Color.BLACK);
 				
 				JpContainer.removeAll();
 		        JpContainer.setLayout(new BorderLayout()); 
@@ -103,6 +106,7 @@ public class MainScreen extends JFrame {
 				JlPrestamos.setForeground(Color.BLUE);
 				JlUsuarios.setForeground(Color.BLACK);
 				JlReportes.setForeground(Color.BLACK);
+				JlTrabajadores.setForeground(Color.BLACK);
 				
 				JpContainer.removeAll();
 		        JpContainer.setLayout(new BorderLayout()); 
@@ -126,6 +130,7 @@ public class MainScreen extends JFrame {
 				JlPrestamos.setForeground(Color.BLACK);
 				JlUsuarios.setForeground(Color.BLUE);
 				JlReportes.setForeground(Color.BLACK);
+				JlTrabajadores.setForeground(Color.BLACK);
 				
 				JpContainer.removeAll();
 		        JpContainer.setLayout(new BorderLayout()); 
@@ -149,6 +154,7 @@ public class MainScreen extends JFrame {
 				JlPrestamos.setForeground(Color.BLACK);
 				JlUsuarios.setForeground(Color.BLACK);
 				JlReportes.setForeground(Color.BLUE);
+				JlTrabajadores.setForeground(Color.BLACK);
 				
 				JpContainer.removeAll();
 		        JpContainer.setLayout(new BorderLayout()); 
@@ -160,7 +166,7 @@ public class MainScreen extends JFrame {
 		});
 		JlReportes.setHorizontalAlignment(SwingConstants.CENTER);
 		JlReportes.setFont(new Font("Tahoma", Font.BOLD, 24));
-		JlReportes.setBounds(0, 452, 200, 60);
+		JlReportes.setBounds(0, 528, 200, 60);
 		panel.add(JlReportes);
 		
 		JLabel lblNewLabel = new JLabel("");
@@ -168,6 +174,31 @@ public class MainScreen extends JFrame {
 		lblNewLabel.setIcon(new ImageIcon(MainScreen.class.getResource("/Icons/icons8-biblioteca-100.png")));
 		lblNewLabel.setBounds(0, 0, 200, 150);
 		panel.add(lblNewLabel);
+		
+		JlTrabajadores = new JLabel("Trabajadores");
+		JlTrabajadores.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				JlHome.setForeground(Color.BLACK);
+				JlPublicaciones.setForeground(Color.BLACK);
+				JlPrestamos.setForeground(Color.BLACK);
+				JlUsuarios.setForeground(Color.BLACK);
+				JlReportes.setForeground(Color.BLACK);
+				JlTrabajadores.setForeground(Color.BLUE);
+				
+				JpContainer.removeAll();
+		        JpContainer.setLayout(new BorderLayout()); 
+		        TrabajadoresPanel p1 = new TrabajadoresPanel();
+		        JpContainer.add(p1, BorderLayout.CENTER); 
+		        JpContainer.revalidate();
+		        JpContainer.repaint();
+				
+			}
+		});
+		JlTrabajadores.setHorizontalAlignment(SwingConstants.CENTER);
+		JlTrabajadores.setFont(new Font("Tahoma", Font.BOLD, 24));
+		JlTrabajadores.setBounds(0, 452, 200, 60);
+		panel.add(JlTrabajadores);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.WHITE);
