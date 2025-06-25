@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import Util.TrabajarFechas;
-
 import static Util.TrabajarFechas.*;
 
 public class Biblioteca {
@@ -105,21 +104,33 @@ public class Biblioteca {
         return registro;
     }
 
-    public void agregarLibro(String id,String titulo, String materia, int pag, String editorial, int ejempares){
+    public void agregarLibro(String id,String titulo, String materia, int pag, String editorial, int ejempares, ArrayList<String> autores){
         if (buscarPublicacion(id)==null){
-        publicaciones.add(new Libro(id,titulo,materia,pag,editorial, ejempares));
+        	publicaciones.add(new Libro(id,titulo,materia,pag,editorial, ejempares,autores));
+        	throw new IllegalArgumentException("Publicacion añadida correctamente");
+        }
+        else{
+        	throw new IllegalArgumentException("Ya existe el codigo de esta publicación");
         }
     }
 
     public void agregrarRevista(String id,String titulo, String materia, int pag, int anno, int numero, int ejemplares){
         if(buscarPublicacion(id)==null){
             publicaciones.add(new Revista(id,titulo,materia,pag,anno,numero, ejemplares));
+            throw new IllegalArgumentException("Publicacion añadida correctamente");
+        }
+        else{
+        	throw new IllegalArgumentException("Ya existe el codigo de esta publicación");
         }
     }
 
-    public void agregrarArticulo(String id,String titulo, String materia, int pag, int ejemp){
+    public void agregrarArticulo(String id,String titulo, String materia, int pag, int ejemp, ArrayList<String> arbitros){
         if(buscarPublicacion(id)==null) {
-                publicaciones.add(new Articulo(id, titulo, materia, pag, ejemp));
+                publicaciones.add(new Articulo(id, titulo, materia, pag, ejemp, arbitros));
+                throw new IllegalArgumentException("Publicacion añadida correctamente");
+        }
+        else{
+        	throw new IllegalArgumentException("Ya existe el codigo de esta publicación");
         }
     }
 
@@ -414,4 +425,5 @@ public class Biblioteca {
             usuarios.add(usuario);
         }
     }
+ 
 }

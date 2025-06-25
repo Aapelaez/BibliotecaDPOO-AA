@@ -13,7 +13,7 @@ public abstract class Persona {
         setGenero(genero);
     }
 
-    public String getId() {
+	public String getId() {
         return id;
     }
 

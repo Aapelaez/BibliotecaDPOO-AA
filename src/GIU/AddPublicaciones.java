@@ -7,6 +7,7 @@ import javax.jws.Oneway;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.StyledEditorKit.UnderlineAction;
 import javax.swing.JButton;
 
@@ -22,6 +23,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -31,6 +33,14 @@ import javax.swing.JTable;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.SpinnerNumberModel;
+
+import Logica.Biblioteca;
+import Logica.Publicacion;
+import Logica.Revista;
 
 public class AddPublicaciones extends JFrame {
 
@@ -51,7 +61,10 @@ public class AddPublicaciones extends JFrame {
 	private JLabel lblAutores;
 	private JLabel lblEditorial;
 	private JScrollPane scrollPane;
+	private ArrayList<String> autores;
+	private ArrayList<String> arbitros;
 	private JLabel lblArbitros;
+	private JComboBox CbTipo;
 
 
 	/**
@@ -65,9 +78,66 @@ public class AddPublicaciones extends JFrame {
 		contentPane.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		autores = new ArrayList<String>();
+		arbitros = new ArrayList<String>();
+
 
 
 		JButton btnAadir = new JButton("A\u00F1adir");
+		btnAadir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String codigo = JtCodigo.getText();
+				String titulo = JtTitulo.getText();
+				String materia = JtMateria.getText();
+				int paginas = (Integer)SpPaginas.getValue();
+				int ejemplares = (Integer) SpEjemplares.getValue();
+				String tipo = CbTipo.getSelectedItem().toString();
+				switch(tipo){
+				case "Revista":
+					int anno = (Integer)Spanno.getValue();
+					int numero  = (Integer)SpNumero.getValue();
+					if(!codigo.isEmpty() && !titulo.isEmpty() && !materia.isEmpty()){
+						//String id, String titulo, String materia, int numPaginas, int anno, int numero, int ejemplares
+						try{
+						Biblioteca.getInstance().agregrarRevista(codigo, titulo, materia, paginas, anno, numero, ejemplares);
+						}catch(Exception e){
+							JOptionPane.showMessageDialog(null, e.getMessage());
+						}
+					}
+					else{
+						JOptionPane.showMessageDialog(null, "Algunos campos no estan rellenos por favor revisar todos los campos");
+					}
+					break;
+				case "Libro":
+					//String id, String titulo, String materia, int numPaginas, String editorial, int ejemplares
+					String editorial = JtEditorial.getText();
+					if(!codigo.isEmpty() && !titulo.isEmpty() && !materia.isEmpty() && !editorial.isEmpty() && !autores.isEmpty()){
+						try{
+						Biblioteca.getInstance().agregarLibro(codigo, titulo, materia, paginas, editorial, ejemplares, autores);
+						}catch(Exception e){
+							JOptionPane.showMessageDialog(null, e.getMessage());
+						}
+					}
+					else{
+						JOptionPane.showMessageDialog(null, "Algunos campos no estan rellenos por favor revisar todos los campos");
+					}
+					break;
+				case "Articulo":
+					if(!codigo.isEmpty() && !titulo.isEmpty() && !materia.isEmpty() && !arbitros.isEmpty()){
+						try{
+						Biblioteca.getInstance().agregrarArticulo(codigo, titulo, materia, paginas, ejemplares,arbitros);
+						}catch(Exception e){
+							JOptionPane.showMessageDialog(null, e.getMessage());
+						}
+					}
+					else{
+						JOptionPane.showMessageDialog(null, "Algunos campos no estan rellenos por favor revisar todos los campos");
+					}
+					break;
+
+				}
+			}
+		});
 		btnAadir.setForeground(Color.WHITE);
 		btnAadir.setBackground(new Color(0, 128, 128));
 		btnAadir.setBounds(170, 721, 165, 40);
@@ -105,7 +175,7 @@ public class AddPublicaciones extends JFrame {
 		lblTipo.setBounds(460, 85, 134, 20);
 		contentPane.add(lblTipo);
 
-		final JComboBox CbTipo = new JComboBox();
+		CbTipo = new JComboBox();
 		CbTipo.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				String tipo = CbTipo.getSelectedItem().toString();
@@ -123,8 +193,6 @@ public class AddPublicaciones extends JFrame {
 					scrollPane.setVisible(false);
 					table.setVisible(false);
 					lblArbitros.setVisible(false);
-					// private int anno;
-					//private int numero;
 					break;
 				case "Libro":
 					addAutores.setVisible(true);
@@ -139,9 +207,7 @@ public class AddPublicaciones extends JFrame {
 					scrollPane.setVisible(true);
 					table.setVisible(true);
 					lblArbitros.setVisible(false);
-					//private ArrayList<String> autores;
-					//private String editorial;
-
+					definirTabla(autores);
 					break;
 				case "Articulo":
 					addAutores.setVisible(true);
@@ -156,7 +222,7 @@ public class AddPublicaciones extends JFrame {
 					scrollPane.setVisible(true);
 					table.setVisible(true);
 					lblArbitros.setVisible(true);
-					//private ArrayList<String> arbitros;
+					definirTabla(arbitros);
 					break;
 
 				}
@@ -206,6 +272,7 @@ public class AddPublicaciones extends JFrame {
 		contentPane.add(lblCantidadDeEjemplares);
 
 		Spanno = new JSpinner();
+		Spanno.setModel(new SpinnerNumberModel(2025, 1000, 2025, 1));
 		Spanno.setBounds(65, 460, 270, 40);
 		contentPane.add(Spanno);
 
@@ -230,6 +297,33 @@ public class AddPublicaciones extends JFrame {
 		JtAutores.setColumns(10);
 
 		addAutores = new JLabel("");
+		addAutores.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				String tipo = CbTipo.getSelectedItem().toString();
+				String name = JtAutores.getText();
+				if(tipo.equals("Libro")){
+					if(name.equals("")){
+
+					}
+					else{
+						autores.add(name);
+						definirTabla(autores);
+						JtAutores.setText("");
+					}
+				}
+				else if(tipo.equals("Articulo")){
+					if(name.equals("")){
+
+					}
+					else{
+						arbitros.add(name);
+						definirTabla(arbitros);
+						JtAutores.setText("");
+					}
+				}
+			}
+		});
 		addAutores.setVisible(false);
 		addAutores.setHorizontalAlignment(SwingConstants.CENTER);
 		addAutores.setIcon(new ImageIcon(AddPublicaciones.class.getResource("/Icons/icons8-plus-math-30.png")));
@@ -268,5 +362,20 @@ public class AddPublicaciones extends JFrame {
 		lblArbitros.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblArbitros.setBounds(65, 425, 134, 20);
 		contentPane.add(lblArbitros);
+		}
+		private void definirTabla(ArrayList<String> aE){
+			DefaultTableModel modelo = new DefaultTableModel();
+			modelo.addColumn("Identificador");
+			modelo.addColumn("Nombre");
+			for(int i=0;i<aE.size();i++){
+				Object[] newRow = new Object[]{i+1,aE.get(i)};
+				modelo.addRow(newRow);
+			}
+			pintarTablaEditores(modelo);
+		}
+		private void pintarTablaEditores(DefaultTableModel modelo){
+			table = new JTable(modelo);
+
+			scrollPane.setViewportView(table);
+		}
 	}
-}

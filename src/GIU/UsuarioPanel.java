@@ -16,10 +16,10 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 
-import Logica.AddUsuario;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import javax.swing.table.DefaultTableModel;
 
 public class UsuarioPanel extends JPanel {
 	private JTextField textField;
@@ -61,6 +61,13 @@ public class UsuarioPanel extends JPanel {
 		add(scrollPane);
 		
 		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				
+			}
+		));
 		scrollPane.setColumnHeaderView(table);
 		
 		JLabel label = new JLabel("");
