@@ -5,13 +5,8 @@ import java.util.ArrayList;
 public class Articulo extends Publicacion{
     private ArrayList<String> arbitros;
 
-    public Articulo(String id, String titulo, String materia, int numPaginas, int cantTotalEjemp) {
-        super(id, titulo, materia, numPaginas, cantTotalEjemp);
-        this.arbitros = new ArrayList<String>();
-    }
-
-    public Articulo(String id, String titulo, String materia, int numPaginas, int cantTotalEjemp, ArrayList<String> arbitros) {
-        super(id, titulo, materia, numPaginas, cantTotalEjemp);
+    public Articulo(String id, String titulo, String materia, int numPaginas, int cantTotalEjemp, boolean estado, ArrayList<String> arbitros) {
+        super(id, titulo, materia, numPaginas, cantTotalEjemp, estado);
         setArbitros(arbitros);
     }
 

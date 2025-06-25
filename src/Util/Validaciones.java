@@ -1,5 +1,10 @@
 package Util;
 
+import Logica.Libro;
+import Logica.Publicacion;
+import Logica.Revista;
+
+
 import java.util.regex.Pattern;
 
 public class Validaciones {
@@ -91,5 +96,54 @@ public class Validaciones {
 
     public static boolean esTextoValido(String texto) {
         return texto != null && !texto.isEmpty() && PATRON_TEXTO_VALIDO.matcher(texto).matches();
+    }
+
+    public static String clasificarPublicacion(Publicacion p){
+        String clasificado = "";
+        if (p!=null){
+            if(p instanceof Libro){
+                clasificado = "Libro";
+            } else if (p instanceof Revista) {
+                clasificado = "Revista";
+            }else{
+                clasificado="Artículo";
+            }
+        }
+        return clasificado;
+    }
+
+    public static boolean validarCodigo(String codigo, String tipoPublicacion) {
+        boolean valido = true;
+        if(codigo==null|| codigo.isEmpty() ||tipoPublicacion==null|| tipoPublicacion.isEmpty()) {
+            valido = false;
+        }
+        // Validar el formato general (L, R o A + 5 dígitos)
+        if (valido&&!Pattern.matches("^[LRA]\\d{5}$", codigo)) {
+            valido= false;
+        }
+        //Verificar que la letra coincida con el tipo de publicación
+        char tipo = codigo.charAt(0);
+        if(valido&&tipo=='L' && !tipoPublicacion.equalsIgnoreCase("Libro")) {
+            valido = false;
+        } else if (valido && tipo == 'R' && !tipoPublicacion.equalsIgnoreCase("Revista")) {
+            valido = false;
+        } else if (valido && tipo == 'A' && !tipoPublicacion.equalsIgnoreCase("Artículo")) {
+            valido = false;
+        }
+        return valido;
+    }
+
+    public static boolean validarEmail(String email) {
+        boolean valido = true;
+        String regex = "^[A-Za-z0-9+_-](?:[A-Za-z0-9+_.-]*[A-Za-z0-9+_-])?@[A-Za-z0-9-]+(?:\\.[A-Za-z0-9-]+)*\\.[A-Za-z]{2,}$";
+        if (!Pattern.matches(regex, email)){
+            valido =false;
+        }
+        // No permitir dos puntos consecutivos en el usuario
+        String usuario = email.substring(0, email.indexOf('@'));
+        if(usuario.contains("..")){
+            valido = false;
+        }
+        return valido;
     }
 }

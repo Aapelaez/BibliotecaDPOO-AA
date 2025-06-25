@@ -1,5 +1,7 @@
 package GIU;
 
+import Logica.Biblioteca;
+
 import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -29,7 +31,7 @@ public class HomePanel extends JPanel {
 		lblTotalDePublicaciones.setBounds(15, 16, 221, 30);
 		panel.add(lblTotalDePublicaciones);
 		
-		JLabel lblNewLabel = new JLabel(" 340");
+		JLabel lblNewLabel = new JLabel(String.valueOf(Biblioteca.getInstance().getPublicaciones().size()));
 		lblNewLabel.setFont(new Font("Yu Gothic UI", Font.BOLD, 24));
 		lblNewLabel.setBounds(25, 62, 69, 54);
 		panel.add(lblNewLabel);
@@ -47,7 +49,7 @@ public class HomePanel extends JPanel {
 		lblUsuarios.setBounds(15, 16, 221, 30);
 		panel_1.add(lblUsuarios);
 		
-		JLabel label_1 = new JLabel(" 340");
+		JLabel label_1 = new JLabel(String.valueOf(Biblioteca.getInstance().getUsuarios().size()));
 		label_1.setFont(new Font("Yu Gothic UI", Font.BOLD, 24));
 		label_1.setBounds(25, 62, 69, 54);
 		panel_1.add(label_1);
@@ -65,7 +67,7 @@ public class HomePanel extends JPanel {
 		lblPrestamosActivos.setBounds(15, 16, 221, 30);
 		panel_2.add(lblPrestamosActivos);
 		
-		JLabel label_2 = new JLabel(" 340");
+		JLabel label_2 = new JLabel(String.valueOf(Biblioteca.getInstance().prestamosActivos()));
 		label_2.setFont(new Font("Yu Gothic UI", Font.BOLD, 24));
 		label_2.setBounds(25, 62, 69, 54);
 		panel_2.add(label_2);
@@ -83,7 +85,7 @@ public class HomePanel extends JPanel {
 		lblVencidos.setBounds(15, 16, 221, 30);
 		panel_3.add(lblVencidos);
 		
-		JLabel label_3 = new JLabel(" 340");
+		JLabel label_3 = new JLabel(String.valueOf(Biblioteca.getInstance().prestamosVencidos()));
 		label_3.setForeground(new Color(255, 0, 0));
 		label_3.setFont(new Font("Yu Gothic UI", Font.BOLD, 24));
 		label_3.setBounds(25, 62, 69, 54);

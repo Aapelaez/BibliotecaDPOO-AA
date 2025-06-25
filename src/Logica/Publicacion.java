@@ -7,6 +7,7 @@ public abstract class Publicacion {
     protected String materia;
     protected int numPaginas;
     protected int cantTotalEjemp;
+    protected boolean estado; // true: disponible, false: reservado por la biblioteca
 
     public boolean compareTo(String id) {
         return this.id.equals(id);
@@ -24,7 +25,7 @@ public abstract class Publicacion {
         return titulo;
     }
 
-    public void setTitulo(String titulo) {
+    private void setTitulo(String titulo) {
         this.titulo = titulo;
     }
 
@@ -32,7 +33,7 @@ public abstract class Publicacion {
         return materia;
     }
 
-    public void setMateria(String materia) {
+    private void setMateria(String materia) {
         this.materia = materia;
     }
 
@@ -40,7 +41,7 @@ public abstract class Publicacion {
         return numPaginas;
     }
 
-    public void setNumPaginas(int numPaginas) {
+    private void setNumPaginas(int numPaginas) {
         this.numPaginas = numPaginas;
     }
     public int getCantTotalEjemp() {
@@ -52,12 +53,21 @@ public abstract class Publicacion {
         }
     }
 
-    public Publicacion (String id, String titulo, String materia, int numPaginas, int cantTotalEjemp) {
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    public Publicacion (String id, String titulo, String materia, int numPaginas, int cantTotalEjemp, boolean estado) {
         setId(id);
         setTitulo(titulo);
         setMateria(materia);
         setNumPaginas(numPaginas);
         setCantTotalEjemp(cantTotalEjemp);
+        setEstado(estado);
     }
 
 
