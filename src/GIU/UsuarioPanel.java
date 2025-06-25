@@ -1,15 +1,25 @@
 package GIU;
 
 import javax.swing.JPanel;
+
 import java.awt.Color;
+
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JScrollPane;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JTable;
+
+import Logica.AddUsuario;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class UsuarioPanel extends JPanel {
 	private JTextField textField;
@@ -28,6 +38,19 @@ public class UsuarioPanel extends JPanel {
 		add(lblUsuarios);
 		
 		JButton btnNuevoUsuario = new JButton("Nuevo Usuario\r\n");
+		btnNuevoUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					AddUsuario dialog = new AddUsuario();
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);
+					dialog.setLocationRelativeTo(null);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+		});
 		btnNuevoUsuario.setForeground(Color.WHITE);
 		btnNuevoUsuario.setBackground(Color.BLUE);
 		btnNuevoUsuario.setBounds(1390, 15, 228, 40);

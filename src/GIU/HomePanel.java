@@ -17,6 +17,7 @@ public class HomePanel extends JPanel {
 		setLayout(null);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		panel.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
 		panel.setBounds(30, 75, 350, 150);
 		add(panel);
@@ -34,6 +35,7 @@ public class HomePanel extends JPanel {
 		panel.add(lblNewLabel);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.WHITE);
 		panel_1.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
 		panel_1.setBounds(442, 75, 350, 150);
 		add(panel_1);
@@ -57,6 +59,7 @@ public class HomePanel extends JPanel {
 		panel_2.setLayout(null);
 		
 		JLabel lblPrestamosActivos = new JLabel("Prestamos Activos\r\n");
+		lblPrestamosActivos.setBackground(Color.WHITE);
 		lblPrestamosActivos.setIcon(new ImageIcon(HomePanel.class.getResource("/Icons/icons8-calendario-externo-ui-anggara-esquema-b\u00E1sico-anggara-putra-2-30.png")));
 		lblPrestamosActivos.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblPrestamosActivos.setBounds(15, 16, 221, 30);
@@ -68,6 +71,7 @@ public class HomePanel extends JPanel {
 		panel_2.add(label_2);
 		
 		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(Color.WHITE);
 		panel_3.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
 		panel_3.setBounds(1266, 75, 350, 150);
 		add(panel_3);
