@@ -165,8 +165,9 @@ public class Inicializar {
         );
         Biblioteca.getInstance().contratarTrabajador("94072143067","Francisco","Tejera","Bibliotecario Asistente",'M',"59987412","fractej@outlook.com", NivelEscolar.Medio);
         Biblioteca.getInstance().contratarTrabajador("82072129881","Mario","Paz","Bibliotecario",'M',"56631278","mayitopaz@gmail.com", NivelEscolar.Superior);
-        Biblioteca.getInstance().contratarTrabajador("85010827821","Jorge", "Pimienta","Asistente Mantenimiento",'M',"56631278","jorgepm@hotmail.es", NivelEscolar.MedioSuperior);
+        Biblioteca.getInstance().contratarTrabajador("85010827821","Jorge", "Pimienta","Asistente Mantenimiento",'M',"56631538","jorgepm@hotmail.es", NivelEscolar.MedioSuperior);
         Biblioteca.getInstance().contratarTrabajador("67012357909","Matilde","Garcia","Asistende Limpieza",'F',"52478560","matilde67@nauta.cu", NivelEscolar.Basico);
+        Biblioteca.getInstance().contratarTrabajador("75021828423","José","Díaz","Administrador",'M',"58847621","josediaz@litcubana.com", NivelEscolar.Superior);
 
         Biblioteca.getInstance().atenderPrestamo(
                 "L001",

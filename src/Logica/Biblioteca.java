@@ -39,7 +39,7 @@ public class Biblioteca {
 
     public static Biblioteca getInstance(){
         if(biblioteca==null){
-            biblioteca = new Biblioteca("Mariana Grajales","Granma","Manzanillo","10:00am - 16:00pm","Pepe Antonio",20);
+            biblioteca = new Biblioteca("Mariana Grajales","Granma","Manzanillo","10:00am - 16:00pm","Jose Díaz",20);
         }
         return biblioteca;
     }
@@ -87,13 +87,12 @@ public class Biblioteca {
         return torpedo;
     }
 
-    public TorpedoUsuario crearTorpedoUsuario(String numUsuario, Prestamo p) {
+    public void crearTorpedoUsuario(String numUsuario, Prestamo p) {
         TorpedoUsuario torpedo=null;
         if (numUsuario!= null) {
             torpedo = new TorpedoUsuario(numUsuario, TrabajarFechas.getMesActual(), TrabajarFechas.getAnnoActual(), p);
             torpedosUsuarios.add(torpedo);
         }
-        return torpedo;
     }
 
     public RegistroPrestamo crearRegistroPrestamo(String idPublicacion) {
@@ -141,9 +140,9 @@ public class Biblioteca {
                 if (usuario.verificarCondicPrestamo(idPublicacion)) {
                     Date fechaConcepcion = TrabajarFechas.getFechaActual();
                     Date fechaLimite;
-                    if(publicacion.getClass().getSimpleName().equals("Libro")) {
+                    if(Util.Validaciones.clasificarPublicacion(publicacion).equals("Libro")) {
                         fechaLimite =sumarDias(fechaConcepcion, ((Libro)publicacion).calcularPlazoMax());
-                    } else if (publicacion.getClass().getSimpleName().equals("Articulo")) {
+                    } else if (Util.Validaciones.clasificarPublicacion(publicacion).equals("Articulo")) {
                         fechaLimite =sumarDias(fechaConcepcion, ((Articulo)publicacion).calcularPlazoMax());
                     }else{
                         fechaLimite =sumarDias(fechaConcepcion, ((Revista)publicacion).calcularPlazoMax());
@@ -151,6 +150,7 @@ public class Biblioteca {
 
                     Prestamo prestamo = new Prestamo(fechaConcepcion, fechaLimite, usuario, idTrabajador, publicacion);
                     prestamos.add(prestamo);
+                    usuario.addPrestamo(prestamo);
                     RegistroPrestamo registro = buscarRegistroPrestamo(idPublicacion);
                     if (registro == null) {
                         registro = crearRegistroPrestamo(idPublicacion);
@@ -160,8 +160,7 @@ public class Biblioteca {
                     }
                     TorpedoUsuario torpedo = buscarTorpedo(usuario.getNumUsuario());
                     if (torpedo == null) {
-                        torpedo = crearTorpedoUsuario(usuario.getNumUsuario(), prestamo);
-                        usuario.addTorpedo(torpedo);
+                        crearTorpedoUsuario(usuario.getNumUsuario(), prestamo);
                     }else {
                             torpedo.addPrestamo(prestamo);
                         }

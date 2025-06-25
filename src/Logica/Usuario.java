@@ -10,17 +10,17 @@ import static Util.TrabajarFechas.*;
 public class Usuario extends Persona {
     private String numUsuario;
     private Date fechaAcreditacion;
-    private ArrayList<TorpedoUsuario> torpedos;
+    private ArrayList<Prestamo> prestamos;
 
     public Usuario(String id, String nombre, String apellidos, char genero, String numUsuario, Date fechaAcreditacion) {
         super(id, nombre, apellidos, genero);
         setNumUsuario(numUsuario);
         setFechaAcreditacion(fechaAcreditacion);
-        this.torpedos = new ArrayList<TorpedoUsuario>();
+        this.prestamos = new ArrayList<Prestamo>();
     }
 
-    public ArrayList<TorpedoUsuario> getTorpedos() {
-        return torpedos;
+    public ArrayList<Prestamo> getPrestamos() {
+        return prestamos;
     }
 
     private void setNumUsuario(String numUsuario) {
@@ -43,26 +43,34 @@ public class Usuario extends Persona {
         return this.getNumUsuario().equals(numUsuario);
     }
 
+    public void addPrestamo(Prestamo prestamo) {
+        if (prestamo != null) {
+            this.prestamos.add(prestamo);
+        }
+    }
+
     public boolean verificarCondicPrestamo(String idPublicacion) {
         TorpedoUsuario torpedo =null;
         boolean posible=true;
         if(estaPenalizado()==null) {
-            if (idPublicacion != null) {
-                torpedo = buscarTorpedoPersonal(new TorpedoUsuario(numUsuario, getMesActual(), getAnnoActual()));
-                if (torpedo != null) {
-                    int i = 0;
+            if(prestamos.size()<3) {
+                if (idPublicacion != null) {
+                    torpedo = Biblioteca.getInstance().buscarTorpedo(numUsuario);
+                    if (torpedo != null) {
+                        int i = 0;
 
-                    while (i < torpedo.getPrestamos().size() && posible) {
-                        Prestamo prestamo = torpedo.getPrestamos().get(i);
-                        if (prestamo.PrestNoEntregado(idPublicacion, getNumUsuario()) != null) {
-                            posible = false;
-                        } else if (prestamo.getEstado() == EstadoPrestamo.EntregadoEnTiempo ||
-                                prestamo.getEstado() == EstadoPrestamo.EntregadoFueraDeTiempo) {
-                            if (cantDiasEntreFechas(prestamo.getFechaEntregado(), getFechaActual()) < 15) {
+                        while (i < torpedo.getPrestamos().size() && posible) {
+                            Prestamo prestamo = torpedo.getPrestamos().get(i);
+                            if (prestamo.PrestNoEntregado(idPublicacion, getNumUsuario()) != null) {
                                 posible = false;
+                            } else if (prestamo.getEstado() == EstadoPrestamo.EntregadoEnTiempo ||
+                                    prestamo.getEstado() == EstadoPrestamo.EntregadoFueraDeTiempo) {
+                                if (cantDiasEntreFechas(prestamo.getFechaEntregado(), getFechaActual()) < 15) {
+                                    posible = false;
+                                }
                             }
+                            ++i;
                         }
-                        ++i;
                     }
                 }
             }
@@ -73,41 +81,21 @@ public class Usuario extends Persona {
 
     public Date estaPenalizado() {
         Date salida = null;
-        for (TorpedoUsuario torpedo : torpedos) {
-            if (torpedo.torpedoVigente()) {
-                for (Prestamo prestamo : torpedo.getPrestamos()) {
+                  for (Prestamo prestamo : prestamos) {
                     if (prestamo.getEstado() == EstadoPrestamo.EntregadoFueraDeTiempo) {
                         if (salida != null) {
                             if (prestamo.finPenalizacion().after(salida)) {
                                 salida = prestamo.finPenalizacion();
                             }
-                        } else if (salida == null) {
+                        } else {
                             salida = prestamo.finPenalizacion();
                         }
 
                     }
                 }
-            }
-        }
         return salida;
     }
 
-    public void addTorpedo(TorpedoUsuario torpedo) {
-        if (torpedo != null) {
-            this.torpedos.add(torpedo);
-        }
-    }
-
-    public TorpedoUsuario buscarTorpedoPersonal(TorpedoUsuario torpedo) {
-        int i = 0;
-        while (i < torpedos.size()) {
-            if (torpedos.get(i).compareTo(numUsuario, getMesActual(), getAnnoActual())) {
-                torpedo = torpedos.get(i);
-            }
-            i++;
-        }
-        return torpedo;
-    }
 
 
 }
