@@ -15,6 +15,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PublicacionesPanel extends JPanel {
 	private JTextField textField;
@@ -23,7 +25,7 @@ public class PublicacionesPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PublicacionesPanel() {
+	public PublicacionesPanel(final MainScreen father) {
 		setBackground(Color.WHITE);
 		setLayout(null);
 		
@@ -33,6 +35,13 @@ public class PublicacionesPanel extends JPanel {
 		add(lblPublicaciones);
 		
 		JButton btnNuevaPublicacion = new JButton("Nueva Publicacion");
+		btnNuevaPublicacion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				AddPublicaciones panel = new AddPublicaciones(father);
+				panel.setVisible(true);
+				panel.setLocationRelativeTo(null);
+			}
+		});
 		btnNuevaPublicacion.setForeground(Color.WHITE);
 		btnNuevaPublicacion.setBackground(Color.BLUE);
 		btnNuevaPublicacion.setBounds(1390, 15, 228, 40);
@@ -86,7 +95,19 @@ public class PublicacionesPanel extends JPanel {
 		button.setBounds(1258, 150, 165, 40);
 		add(button);
 		
-		JButton btnEliminar = new JButton("Eliminar");
+		JButton btnEliminar = new JButton("Modificar Estado");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int pos=customTable.getSelectedRow();
+				if(Biblioteca.getInstance().getPublicaciones().get(pos).getEstado()){
+					Biblioteca.getInstance().desactivarPublicacion(Biblioteca.getInstance().getPublicaciones().get(pos).getId());
+					father.Actualizar(1);
+				}else{
+					Biblioteca.getInstance().activarPublicacion(Biblioteca.getInstance().getPublicaciones().get(pos).getId());
+					father.Actualizar(1);
+				}
+			}
+		});
 		btnEliminar.setForeground(new Color(255, 255, 255));
 		btnEliminar.setBackground(new Color(255, 0, 0));
 		btnEliminar.setBounds(1453, 150, 165, 40);

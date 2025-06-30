@@ -85,7 +85,7 @@ public class MainScreen extends JFrame {
 				
 				JpContainer.removeAll();
 		        JpContainer.setLayout(new BorderLayout()); 
-		        PublicacionesPanel p1 = new PublicacionesPanel();
+		        PublicacionesPanel p1 = new PublicacionesPanel(MainScreen.this);
 		        JpContainer.add(p1, BorderLayout.CENTER); 
 		        JpContainer.revalidate();
 		        JpContainer.repaint();
@@ -134,7 +134,7 @@ public class MainScreen extends JFrame {
 				
 				JpContainer.removeAll();
 		        JpContainer.setLayout(new BorderLayout()); 
-		        UsuarioPanel p1 = new UsuarioPanel();
+		        UsuarioPanel p1 = new UsuarioPanel(MainScreen.this);
 		        JpContainer.add(p1, BorderLayout.CENTER); 
 		        JpContainer.revalidate();
 		        JpContainer.repaint();
@@ -188,7 +188,7 @@ public class MainScreen extends JFrame {
 				
 				JpContainer.removeAll();
 		        JpContainer.setLayout(new BorderLayout()); 
-		        TrabajadoresPanel p1 = new TrabajadoresPanel();
+		        TrabajadoresPanel p1 = new TrabajadoresPanel(MainScreen.this);
 		        JpContainer.add(p1, BorderLayout.CENTER); 
 		        JpContainer.revalidate();
 		        JpContainer.repaint();
@@ -223,10 +223,43 @@ public class MainScreen extends JFrame {
 		panel_2.add(lblNewLabel_2);
 		
 		JpContainer.removeAll();
-        JpContainer.setLayout(new BorderLayout()); // Establecemos BorderLayout
+        JpContainer.setLayout(new BorderLayout());
         HomePanel p1 = new HomePanel();
-        JpContainer.add(p1, BorderLayout.CENTER); // Añadimos al centro
+        JpContainer.add(p1, BorderLayout.CENTER);
         JpContainer.revalidate();
         JpContainer.repaint();
+        
 	}
+	public void Actualizar(int panel){
+    	switch (panel) {
+		case 1:
+			JpContainer.removeAll();
+	        JpContainer.setLayout(new BorderLayout()); 
+	        PublicacionesPanel p1 = new PublicacionesPanel(MainScreen.this);
+	        JpContainer.add(p1, BorderLayout.CENTER); 
+	        JpContainer.revalidate();
+	        JpContainer.repaint();
+			break;
+		case 3:
+			JpContainer.removeAll();
+	        JpContainer.setLayout(new BorderLayout()); 
+	        UsuarioPanel p3 = new UsuarioPanel(MainScreen.this);
+	        JpContainer.add(p3, BorderLayout.CENTER); 
+	        JpContainer.revalidate();
+	        JpContainer.repaint();
+			break;
+		case 4:
+			JpContainer.removeAll();
+	        JpContainer.setLayout(new BorderLayout()); 
+	        TrabajadoresPanel p4 = new TrabajadoresPanel(MainScreen.this);
+	        JpContainer.add(p4, BorderLayout.CENTER); 
+	        JpContainer.revalidate();
+	        JpContainer.repaint();
+	        break;
+
+		default:
+			break;
+		}
+    }
+	
 }

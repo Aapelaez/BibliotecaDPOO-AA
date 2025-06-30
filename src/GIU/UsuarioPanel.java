@@ -17,11 +17,15 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 
 
+
+
 import GIU.AddUsuario;
 import Logica.Biblioteca;
 import Logica.Publicacion;
 import Logica.Usuario;
 import Util.TrabajarFechas;
+
+
 
 
 import java.awt.event.ActionListener;
@@ -38,34 +42,34 @@ public class UsuarioPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public UsuarioPanel() {
+	public UsuarioPanel(final MainScreen father) {
 		setBackground(Color.WHITE);
 		setLayout(null);
-		
+
 		JLabel lblUsuarios = new JLabel("Usuarios");
 		lblUsuarios.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblUsuarios.setBounds(30, 15, 138, 30);
 		add(lblUsuarios);
-		
+
 		JButton btnNuevoUsuario = new JButton("Nuevo Usuario\r\n");
 		btnNuevoUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					AddUsuario dialog = new AddUsuario();
+					AddUsuario dialog = new AddUsuario(father);
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 					dialog.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				
+
 			}
 		});
 		btnNuevoUsuario.setForeground(Color.WHITE);
 		btnNuevoUsuario.setBackground(Color.BLUE);
 		btnNuevoUsuario.setBounds(1390, 15, 228, 40);
 		add(btnNuevoUsuario);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(30, 195, 1588, 534);
 		add(scrollPane);
@@ -73,7 +77,7 @@ public class UsuarioPanel extends JPanel {
 		List<String> columns = Arrays.asList(
 				"CI", "N. Usuario", "Nombre", "Género", "F. Acreditac",
 				"Prest. Activ"
-		);
+				);
 
 		try {
 			List<Usuario> usuarios = Biblioteca.getInstance().getUsuarios();
@@ -81,7 +85,7 @@ public class UsuarioPanel extends JPanel {
 			int pos = 0;
 			for (Usuario u : usuarios) {
 				Object[] row = {u.getId(), u.getNumUsuario(), u.getNombre()+" "+u.getApellidos(),
-						u.getGenero(), TrabajarFechas.formatearFecha(u.getFechaAcreditacion()), u.getTorpedos().size()};
+						u.getGenero(), TrabajarFechas.formatearFecha(u.getFechaAcreditacion()), u.getPrestamos().size()};
 				//Cambiar torpedo por prestamos activos
 				data[pos] = row;
 				pos++;
@@ -96,29 +100,40 @@ public class UsuarioPanel extends JPanel {
 			throw new RuntimeException(e);
 		}
 
-		
+
 		JLabel label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setIcon(new ImageIcon(UsuarioPanel.class.getResource("/Icons/icons8-b\u00FAsqueda-30 (1).png")));
 		label.setBounds(30, 150, 40, 40);
 		add(label);
-		
+
 		textField = new JTextField();
 		textField.setColumns(10);
 		textField.setBounds(72, 150, 350, 40);
 		add(textField);
-		
-		JButton button_1 = new JButton("Eliminar");
-		button_1.setForeground(Color.WHITE);
-		button_1.setBackground(Color.RED);
-		button_1.setBounds(1453, 150, 165, 40);
-		add(button_1);
-		
-		JButton button_2 = new JButton("Editar");
-		button_2.setForeground(Color.DARK_GRAY);
-		button_2.setBackground(new Color(255, 255, 102));
-		button_2.setBounds(1258, 150, 165, 40);
-		add(button_2);
+
+		JButton editButton = new JButton("Editar");
+		editButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int row = customTable.getSelectedRow();
+				if(row!=-1){
+					String numUsuario = (String) customTable.getValueAt(row, 1);
+					Usuario edit = Biblioteca.getInstance().buscarUsuario(numUsuario);
+					try {
+						EditUsuario dialog = new EditUsuario(father,edit);
+						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						dialog.setLocationRelativeTo(null);
+						dialog.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		editButton.setForeground(Color.DARK_GRAY);
+		editButton.setBackground(new Color(255, 255, 102));
+		editButton.setBounds(1453, 150, 165, 40);
+		add(editButton);
 
 	}
 

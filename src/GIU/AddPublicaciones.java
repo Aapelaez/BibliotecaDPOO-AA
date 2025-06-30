@@ -70,11 +70,12 @@ public class AddPublicaciones extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddPublicaciones() {
+	public AddPublicaciones(final MainScreen father) {
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 777);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -99,10 +100,13 @@ public class AddPublicaciones extends JFrame {
 					if(!codigo.isEmpty() && !titulo.isEmpty() && !materia.isEmpty()){
 						//String id, String titulo, String materia, int numPaginas, int anno, int numero, int ejemplares
 						try{
-						Biblioteca.getInstance().agregrarRevista(codigo, titulo, materia, paginas, anno, numero, ejemplares);
+						Biblioteca.getInstance().agregrarRevista(codigo, titulo, materia, paginas,true, anno, numero, ejemplares);
+						JOptionPane.showMessageDialog(null, "Publicacion añadida correctamente");
+						dispose();
+						father.Actualizar(1);
 						}catch(Exception e){
 							JOptionPane.showMessageDialog(null, e.getMessage());
-						}
+							}
 					}
 					else{
 						JOptionPane.showMessageDialog(null, "Algunos campos no estan rellenos por favor revisar todos los campos");
@@ -114,6 +118,9 @@ public class AddPublicaciones extends JFrame {
 					if(!codigo.isEmpty() && !titulo.isEmpty() && !materia.isEmpty() && !editorial.isEmpty() && !autores.isEmpty()){
 						try{
 						Biblioteca.getInstance().agregarLibro(codigo, titulo, materia, paginas, editorial, ejemplares, autores);
+						JOptionPane.showMessageDialog(null, "Publicacion añadida correctamente");
+						dispose();
+						father.Actualizar(1);
 						}catch(Exception e){
 							JOptionPane.showMessageDialog(null, e.getMessage());
 						}
@@ -126,6 +133,9 @@ public class AddPublicaciones extends JFrame {
 					if(!codigo.isEmpty() && !titulo.isEmpty() && !materia.isEmpty() && !arbitros.isEmpty()){
 						try{
 						Biblioteca.getInstance().agregrarArticulo(codigo, titulo, materia, paginas, ejemplares,arbitros);
+						JOptionPane.showMessageDialog(null, "Publicacion añadida correctamente");
+						dispose();
+						father.Actualizar(1);
 						}catch(Exception e){
 							JOptionPane.showMessageDialog(null, e.getMessage());
 						}

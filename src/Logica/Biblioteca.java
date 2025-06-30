@@ -106,8 +106,7 @@ public class Biblioteca {
 
     public void agregarLibro(String id,String titulo, String materia, int pag, String editorial, int ejempares, ArrayList<String> autores){
         if (buscarPublicacion(id)==null){
-        	publicaciones.add(new Libro(id,titulo,materia,pag,editorial, ejempares,autores));
-        	throw new IllegalArgumentException("Publicacion a�adida correctamente");
+        	publicaciones.add(new Libro(id,titulo,materia,pag,editorial, ejempares,autores,true));        
         }
         else{
         	throw new IllegalArgumentException("Ya existe el codigo de esta publicaci�n");
@@ -117,18 +116,23 @@ public class Biblioteca {
 
     public void agregrarRevista(String id,String titulo, String materia, int pag, boolean estado, int anno, int numero, int ejemplares){
         if(buscarPublicacion(id)==null){
-            publicaciones.add(new Revista(id,titulo,materia,pag,anno,numero, ejemplares));
-            throw new IllegalArgumentException("Publicacion a�adida correctamente");
+            publicaciones.add(new Revista(id,titulo,materia,pag,anno,numero, ejemplares,true));
         }
         else{
         	throw new IllegalArgumentException("Ya existe el codigo de esta publicaci�n");
         }
     }
+    public void agregarUsuarios(String id,String nombre, String apellido,char genero,String numUsuarios){
+    	if(buscarUsuario(numUsuarios)==null){
+    	usuarios.add(new Usuario(id,nombre,apellido,genero,numUsuarios,getFechaActual()));
+    	}else{
+    		throw new IllegalArgumentException("Ya existe un usuario con este codigo");
+    	}
+    }
 
     public void agregrarArticulo(String id,String titulo, String materia, int pag, int ejemp, ArrayList<String> arbitros){
         if(buscarPublicacion(id)==null) {
-                publicaciones.add(new Articulo(id, titulo, materia, pag, ejemp, arbitros));
-                throw new IllegalArgumentException("Publicacion a�adida correctamente");
+                publicaciones.add(new Articulo(id, titulo, materia, pag, ejemp, true,arbitros));                
         }
         else{
         	throw new IllegalArgumentException("Ya existe el codigo de esta publicaci�n");
@@ -290,6 +294,27 @@ public class Biblioteca {
             prestamo.actualizarProrroga(cantDias);
         }
     }
+    
+    public void despedirTrabajador(String idTrabajador) {
+        Trabajador trabajador = buscarTrabajador(idTrabajador);
+        if (trabajador != null) {
+            trabajadores.remove(trabajador);
+        }
+    }
+
+    public void desactivarPublicacion(String idPublicacion) {
+        Publicacion publicacion = buscarPublicacion(idPublicacion);
+        if (publicacion != null&&publicacion.estado) {
+            publicacion.setEstado(false);
+        }
+    }
+
+    public void activarPublicacion(String idPublicacion) {
+        Publicacion publicacion = buscarPublicacion(idPublicacion);
+        if (publicacion != null&&!publicacion.estado) {
+            publicacion.setEstado(true);
+        }
+    }
 
     //REPORTES
     //Para mostrar datos de préstamo de ejemplares prestados de una publicación en un mes
@@ -426,11 +451,42 @@ public class Biblioteca {
         return trabajador;
     }
 
-    public void contratarTrabajador(String id, String nombre, String apellido, String cargo, char genero, String telefono, String email, NivelEscolar nivelEscolar) {
+    public void contratarTrabajador(String id, String nombre, String apellido, String cargo, char genero, NivelEscolar nivelEscolar) {
         if (buscarTrabajador(id) == null) {
-            Trabajador t = new Trabajador(id, nombre, apellido, genero, nivelEscolar, cargo, getFechaActual());
+        	int edad = 18;
+            Trabajador t = new Trabajador(id, nombre, apellido, genero, nivelEscolar, cargo, getFechaActual(),edad);
             trabajadores.add(t);
         }
+        else{
+        	throw new IllegalArgumentException("Ya existe este Trabajador");
+        }
+    }
+    public void editarTrabajador(String id, String nombre, String apellido, String cargo, char genero, NivelEscolar nivelEscolar,Trabajador edit){
+    	edit= new Trabajador(id, nombre, apellido, genero, nivelEscolar, cargo,edit.getFechaContratacion(),18);
+    	boolean flag = false;
+    	int i=0;
+    	while(i<trabajadores.size() && !flag){
+    		if(trabajadores.get(i).getId().equals(edit.getId())){
+    			trabajadores.remove(i);
+    			trabajadores.add(i,edit);
+    			flag=true;
+    		}
+    		i++;
+    	}
+    }
+  
+    public void editarUsuario(String id, String nombre, String apellidos, char genero, String numUsuario,Usuario edit){
+    	edit=new Usuario(id,nombre,apellidos,genero,numUsuario,getFechaActual());
+    	boolean flag = false;
+    	int i=0;
+    	while(i<usuarios.size() && !flag){
+    		if(usuarios.get(i).getNumUsuario().equals(edit.getNumUsuario())){
+    			usuarios.remove(i);
+    			usuarios.add(i,edit);
+    			flag=true;
+    		}
+    		i++;
+    	}
     }
 
     public Usuario buscarUsuario(String numUsuario) {
@@ -451,5 +507,7 @@ public class Biblioteca {
             usuarios.add(usuario);
         }
     }
+
+	
  
 }

@@ -1,45 +1,43 @@
 package GIU;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
 import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.JLabel;
-
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import Logica.Biblioteca;
+import Logica.Usuario;
 
-public class AddUsuario extends JDialog {
+public class EditUsuario extends JDialog {
 
+	private final JPanel contentPanel = new JPanel();
 	private final JPanel CpGenero = new JPanel();
 	private JTextField JtCid;
 	private JTextField JtName;
 	private JTextField JtApellidos;
 	private JTextField JtIdu;
-	private JComboBox CbGenero;
+	private JTextField Jtgenero;
 
 	/**
 	 * Create the dialog.
 	 */
-	public AddUsuario(final MainScreen father) {
+	public EditUsuario(final MainScreen father,final Usuario edit) {
 		setUndecorated(true);
 		setBounds(100, 100, 720, 650);
 		getContentPane().setLayout(new BorderLayout());
@@ -48,33 +46,24 @@ public class AddUsuario extends JDialog {
 		getContentPane().add(CpGenero, BorderLayout.CENTER);
 		CpGenero.setLayout(null);
 		
-		JButton button = new JButton("A\u00F1adir");
-		button.addActionListener(new ActionListener() {
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String carnetId = JtCid.getText();
-				String nombre = JtName.getText();
-				String apellido =JtApellidos.getText();
-				String identificador = JtIdu.getText();
-				char genero = CbGenero.getSelectedItem().toString().equals("Masculino")?'M':'F';
-				if(!carnetId.equals("") && !nombre.equals("") && !apellido.equals("") && !identificador.equals("")){
-					try{
-					Biblioteca.getInstance().agregarUsuarios(carnetId, nombre, apellido, genero, identificador);
-					JOptionPane.showMessageDialog(null, "Trabajador añadido correctamente");
-					dispose();
-					father.Actualizar(3);
-					}catch(Exception e){
-						JOptionPane.showMessageDialog(null, e.getMessage());
-					}
-				}else{
-					JOptionPane.showMessageDialog(null, "Algunos campos no estan rellenos por favor revisar todos los campos");
-				}
-				
+				String carnetId = edit.getId();
+				String nombre = JtName.getText().equals("")?edit.getNombre():JtName.getText();
+				String apellido =JtApellidos.getText().equals("")?edit.getApellidos():JtApellidos.getText();
+				String identificador = edit.getNumUsuario();
+				char genero = edit.getGenero();
+				Biblioteca.getInstance().editarUsuario(carnetId, nombre, apellido, genero, identificador, edit);
+				JOptionPane.showMessageDialog(null, "Trabajador editado correctamente");
+				dispose();
+				father.Actualizar(3);
 			}
 		});
-		button.setForeground(Color.WHITE);
-		button.setBackground(new Color(0, 128, 128));
-		button.setBounds(123, 538, 165, 40);
-		CpGenero.add(button);
+		btnEditar.setForeground(Color.WHITE);
+		btnEditar.setBackground(new Color(0, 128, 128));
+		btnEditar.setBounds(123, 538, 165, 40);
+		CpGenero.add(btnEditar);
 		
 		JButton button_1 = new JButton("Salir");
 		button_1.addActionListener(new ActionListener() {
@@ -87,7 +76,7 @@ public class AddUsuario extends JDialog {
 		button_1.setBounds(382, 538, 165, 40);
 		CpGenero.add(button_1);
 		
-		JLabel lblAadirUsuario = new JLabel("A\u00F1adir Usuario");
+		JLabel lblAadirUsuario = new JLabel("Editar Usuario");
 		lblAadirUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAadirUsuario.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblAadirUsuario.setBounds(253, 16, 212, 30);
@@ -99,6 +88,8 @@ public class AddUsuario extends JDialog {
 		CpGenero.add(lblCarnerDeIdentidad);
 		
 		JtCid = new JTextField();
+		JtCid.setText(edit.getId());
+		JtCid.setEditable(false);
 		JtCid.setColumns(10);
 		JtCid.setBounds(30, 104, 270, 40);
 		CpGenero.add(JtCid);
@@ -109,6 +100,7 @@ public class AddUsuario extends JDialog {
 		CpGenero.add(lblNombre);
 		
 		JtName = new JTextField();
+		JtName.setText(edit.getNombre());
 		JtName.setColumns(10);
 		JtName.setBounds(30, 215, 270, 40);
 		CpGenero.add(JtName);
@@ -119,6 +111,7 @@ public class AddUsuario extends JDialog {
 		CpGenero.add(lblApellidos);
 		
 		JtApellidos = new JTextField();
+		JtApellidos.setText(edit.getApellidos());
 		JtApellidos.setColumns(10);
 		JtApellidos.setBounds(362, 215, 270, 40);
 		CpGenero.add(JtApellidos);
@@ -128,13 +121,9 @@ public class AddUsuario extends JDialog {
 		lblGenero.setBounds(30, 292, 165, 20);
 		CpGenero.add(lblGenero);
 		
-		CbGenero = new JComboBox();
-		CbGenero.setEditable(true);
-		CbGenero.setModel(new DefaultComboBoxModel(new String[] {"Masculino", "Femenino"}));
-		CbGenero.setBounds(30, 328, 258, 40);
-		CpGenero.add(CbGenero);
-		
 		JtIdu = new JTextField();
+		JtIdu.setText(edit.getNumUsuario());
+		JtIdu.setEditable(false);
 		JtIdu.setColumns(10);
 		JtIdu.setBounds(362, 104, 270, 40);
 		CpGenero.add(JtIdu);
@@ -143,5 +132,13 @@ public class AddUsuario extends JDialog {
 		lblIdentificadorDelUsuario.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblIdentificadorDelUsuario.setBounds(362, 71, 227, 20);
 		CpGenero.add(lblIdentificadorDelUsuario);
+		
+		Jtgenero = new JTextField();
+		Jtgenero.setText(edit.getGenero()=='M'?"Masculino":"Femenino");
+		Jtgenero.setEditable(false);
+		Jtgenero.setColumns(10);
+		Jtgenero.setBounds(30, 335, 270, 40);
+		CpGenero.add(Jtgenero);
 	}
+
 }

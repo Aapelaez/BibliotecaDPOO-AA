@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Inicializar {
     public static void inicializar() {
-        ArrayList<String>arbitrosCientif=new ArrayList<String>();
+        /*ArrayList<String>arbitrosCientif=new ArrayList<String>();
         arbitrosCientif.add("Dr. Ana Torres");
         arbitrosCientif.add("Dr. Luis Fernández");
 
@@ -203,7 +203,7 @@ public class Inicializar {
                 "A001",
                 Biblioteca.getInstance().buscarUsuario("U001"),
                 "82072129881"
-        );
+        );*/
 
     }
 }

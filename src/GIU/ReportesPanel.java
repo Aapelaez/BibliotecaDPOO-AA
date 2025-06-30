@@ -36,9 +36,10 @@ import static Util.TrabajarFechas.formatearFecha;
 		lblReportes.setBounds(30, 15, 138, 30);
 		add(lblReportes);
 
-		JScrollPane scrollPane = new JScrollPane();
+		final JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(190, 277, 1313, 445);
-		JLabel lblSugerencia = new JLabel();
+		
+		final JLabel lblSugerencia = new JLabel();
 		lblSugerencia.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblSugerencia.setText("<html><u>Seleccione un reporte para ver los detalles.</u></html>");
 		lblSugerencia.setBounds(200, 277, 500, 30);
@@ -239,7 +240,7 @@ import static Util.TrabajarFechas.formatearFecha;
 			 int pos = 0;
 			 for (Usuario u : usuarios) {
 				 Object[] row = {u.getId(), u.getNumUsuario(), u.getNombre()+" "+u.getApellidos(),
-						 u.getGenero(), TrabajarFechas.formatearFecha(u.getFechaAcreditacion()), u.getTorpedos().size()};
+						 u.getGenero(), TrabajarFechas.formatearFecha(u.getFechaAcreditacion()), u.getPrestamos().size()};
 				 //Cambiar torpedo por prestamos activos
 				 data[pos] = row;
 				 pos++;

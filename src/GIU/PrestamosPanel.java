@@ -94,6 +94,14 @@ public class PrestamosPanel extends JPanel {
 		add(btnEditar);
 		
 		JButton btnDevolver = new JButton("Devolver");
+		btnDevolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int pos= customTable.getSelectedRow();
+				Prestamo p=Biblioteca.getInstance().getPrestamos().get(pos);
+				Biblioteca.getInstance().recibirDevolucion(p);
+				
+			}
+		});
 		btnDevolver.setForeground(Color.WHITE);
 		btnDevolver.setBackground(new Color(0, 128, 128));
 		btnDevolver.setBounds(1263, 150, 165, 40);
