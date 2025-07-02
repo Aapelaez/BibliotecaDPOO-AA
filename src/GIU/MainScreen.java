@@ -110,7 +110,7 @@ public class MainScreen extends JFrame {
 				
 				JpContainer.removeAll();
 		        JpContainer.setLayout(new BorderLayout()); 
-		        PrestamosPanel p1 = new PrestamosPanel();
+		        PrestamosPanel p1 = new PrestamosPanel(MainScreen.this);
 		        JpContainer.add(p1, BorderLayout.CENTER); 
 		        JpContainer.revalidate();
 		        JpContainer.repaint();
@@ -237,6 +237,14 @@ public class MainScreen extends JFrame {
 	        JpContainer.setLayout(new BorderLayout()); 
 	        PublicacionesPanel p1 = new PublicacionesPanel(MainScreen.this);
 	        JpContainer.add(p1, BorderLayout.CENTER); 
+	        JpContainer.revalidate();
+	        JpContainer.repaint();
+			break;
+		case 2:
+			JpContainer.removeAll();
+	        JpContainer.setLayout(new BorderLayout()); 
+	        PrestamosPanel p2 = new PrestamosPanel(MainScreen.this);
+	        JpContainer.add(p2, BorderLayout.CENTER); 
 	        JpContainer.revalidate();
 	        JpContainer.repaint();
 			break;

@@ -5,6 +5,7 @@ import Logica.Prestamo;
 import Logica.Publicacion;
 
 import javax.swing.*;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -22,7 +23,7 @@ public class PrestamosPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PrestamosPanel() {
+	public PrestamosPanel(final MainScreen father) {
 		setBackground(Color.WHITE);
 		setLayout(null);
 		
@@ -36,7 +37,14 @@ public class PrestamosPanel extends JPanel {
 		btnNewButton.setBackground(Color.BLUE);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//Validar que hayan publicaciones y usuarios disponibles sin penalizaciones ni 3 prestamos activos
+				try {
+					SelectUsuario dialog = new SelectUsuario(father);
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setLocationRelativeTo(null);
+					dialog.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		btnNewButton.setBounds(1390, 15, 228, 40);

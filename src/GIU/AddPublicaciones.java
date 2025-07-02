@@ -23,6 +23,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.DefaultComboBoxModel;
@@ -71,6 +72,7 @@ public class AddPublicaciones extends JFrame {
 	 * Create the frame.
 	 */
 	public AddPublicaciones(final MainScreen father) {
+	
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 777);
