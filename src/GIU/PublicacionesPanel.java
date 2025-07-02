@@ -4,6 +4,7 @@ import Logica.Biblioteca;
 import Logica.Publicacion;
 
 import javax.swing.*;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.util.Arrays;
@@ -83,6 +84,22 @@ public class PublicacionesPanel extends JPanel {
 		textField.setColumns(10);
 		
 		JButton button = new JButton("Editar");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int row = customTable.getSelectedRow();
+				if(row!=-1){
+					String idPublicacion = (String) customTable.getValueAt(row, 0);
+					Publicacion p= Biblioteca.getInstance().buscarPublicacion(idPublicacion);
+					try {
+						EditPublicaciones dialog = new EditPublicaciones(father,p);
+						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						dialog.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 		button.setForeground(Color.DARK_GRAY);
 		button.setBackground(new Color(255, 255, 102));
 		button.setBounds(1258, 150, 165, 40);

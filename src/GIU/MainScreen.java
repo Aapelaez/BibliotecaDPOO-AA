@@ -243,7 +243,7 @@ public class MainScreen extends JFrame {
 		case 2:
 			JpContainer.removeAll();
 	        JpContainer.setLayout(new BorderLayout()); 
-	        PrestamosPanel p2 = new PrestamosPanel(MainScreen.this);
+	        PrestamosPanel p2 = new PrestamosPanel(MainScreen.this);  
 	        JpContainer.add(p2, BorderLayout.CENTER); 
 	        JpContainer.revalidate();
 	        JpContainer.repaint();
