@@ -1,22 +1,10 @@
 package GIU;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import java.awt.Color;
 
-import javax.swing.JLabel;
-
 import java.awt.Font;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JScrollPane;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JTable;
-
-
 
 
 import GIU.AddUsuario;
@@ -86,7 +74,6 @@ public class UsuarioPanel extends JPanel {
 			for (Usuario u : usuarios) {
 				Object[] row = {u.getId(), u.getNumUsuario(), u.getNombre()+" "+u.getApellidos(),
 						u.getGenero(), TrabajarFechas.formatearFecha(u.getFechaAcreditacion()), u.getPrestamos().size()};
-				//Cambiar torpedo por prestamos activos
 				data[pos] = row;
 				pos++;
 
@@ -127,6 +114,10 @@ public class UsuarioPanel extends JPanel {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+				} else if (!Biblioteca.getInstance().getUsuarios().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Seleccione un usuario para editar", "Error", JOptionPane.ERROR_MESSAGE);
+				}else {
+					JOptionPane.showMessageDialog(null, "No hay usuarios registrados", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

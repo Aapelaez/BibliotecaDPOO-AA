@@ -1,21 +1,11 @@
 package GIU;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.Color;
 
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-
 import java.awt.Font;
-
-import javax.swing.JButton;
-import javax.swing.JTextField;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -24,7 +14,7 @@ public class LoginFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField JtUser;
-	private JTextField JtPasswort;
+	private JPasswordField JtPassword;
 	private JLabel Mensaje; 
 
 	/**
@@ -57,7 +47,7 @@ public class LoginFrame extends JFrame {
 		JButton btnNewButton = new JButton("Acceder");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(JtUser.getText().equals("Admin") && JtPasswort.getText().equals("admin1234")){
+				if(JtUser.getText().equals("Admin") && JtPassword.getText().equals("admin1234")){
 					try {
 						MainScreen frame = new MainScreen();
 						frame.setVisible(true);
@@ -92,10 +82,10 @@ public class LoginFrame extends JFrame {
 		lblContrasea.setBounds(75, 220, 115, 30);
 		contentPane.add(lblContrasea);
 		
-		JtPasswort = new JTextField();
-		JtPasswort.setColumns(10);
-		JtPasswort.setBounds(75, 252, 435, 45);
-		contentPane.add(JtPasswort);
+		JtPassword = new JPasswordField();
+		JtPassword.setColumns(10);
+		JtPassword.setBounds(75, 252, 435, 45);
+		contentPane.add(JtPassword);
 		
 		Mensaje = new JLabel("Credenciales Incorrectas");
 		Mensaje.setVisible(false);

@@ -3,18 +3,11 @@ package GIU;
 import Logica.Biblioteca;
 import Logica.Publicacion;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.Color;
-import javax.swing.JLabel;
 import java.awt.Font;
 import java.util.Arrays;
 import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.ImageIcon;
-import javax.swing.JTextField;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -99,12 +92,18 @@ public class PublicacionesPanel extends JPanel {
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int pos=customTable.getSelectedRow();
+				if(pos!=-1){
 				if(Biblioteca.getInstance().getPublicaciones().get(pos).getEstado()){
 					Biblioteca.getInstance().desactivarPublicacion(Biblioteca.getInstance().getPublicaciones().get(pos).getId());
 					father.Actualizar(1);
 				}else{
 					Biblioteca.getInstance().activarPublicacion(Biblioteca.getInstance().getPublicaciones().get(pos).getId());
 					father.Actualizar(1);
+				}
+				} else if (!Biblioteca.getInstance().getPublicaciones().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Seleccione una publicación para modificar su estado", "Error", JOptionPane.ERROR_MESSAGE);
+				}else{
+					JOptionPane.showMessageDialog(null, "No hay publicaciones registradas", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

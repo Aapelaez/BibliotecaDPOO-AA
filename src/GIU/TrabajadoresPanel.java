@@ -116,8 +116,12 @@ public class TrabajadoresPanel extends JPanel {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-				}else{
-					JOptionPane.showMessageDialog(null, "Por favor seleccione el trabajador que desea editar");
+				}else if(!Biblioteca.getInstance().getTrabajadores().isEmpty()){
+					JOptionPane.showMessageDialog(null, "Por favor seleccione el trabajador que desea editar",
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}else {
+					JOptionPane.showMessageDialog(null, "No hay trabajadores registrados",
+							"Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -134,8 +138,11 @@ public class TrabajadoresPanel extends JPanel {
 					String ci=(String) customTable.getValueAt(row, 0);
 					Biblioteca.getInstance().despedirTrabajador(ci);
 					father.Actualizar(4);
-				}else{
+				}else if(!Biblioteca.getInstance().getTrabajadores().isEmpty()){
 					JOptionPane.showMessageDialog(null, "Por favor seleccione el trabajador que desea eliminar");
+				}else {
+					JOptionPane.showMessageDialog(null, "No hay trabajadores registrados",
+							"Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

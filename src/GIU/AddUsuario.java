@@ -19,6 +19,7 @@ import java.awt.Font;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
+import GIU.TextFieldID;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JComboBox;
@@ -30,7 +31,7 @@ import Logica.Biblioteca;
 public class AddUsuario extends JDialog {
 
 	private final JPanel CpGenero = new JPanel();
-	private JTextField JtCid;
+	private TextFieldID JtCid;
 	private JTextField JtName;
 	private JTextField JtApellidos;
 	private JTextField JtIdu;
@@ -98,7 +99,7 @@ public class AddUsuario extends JDialog {
 		lblCarnerDeIdentidad.setBounds(30, 70, 165, 20);
 		CpGenero.add(lblCarnerDeIdentidad);
 		
-		JtCid = new JTextField();
+		JtCid = new TextFieldID();
 		JtCid.setColumns(10);
 		JtCid.setBounds(30, 104, 270, 40);
 		CpGenero.add(JtCid);

@@ -33,7 +33,7 @@ public class MainScreen extends JFrame {
 	 */
 	public MainScreen() {
 		setResizable(false);
-		setTitle("Gestios de Biblioteca");
+		setTitle("Gestion de Biblioteca");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1870, 950);
 		contentPane = new JPanel();

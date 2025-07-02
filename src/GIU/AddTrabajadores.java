@@ -14,6 +14,7 @@ import java.awt.Font;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
+import GIU.TextFieldID;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
@@ -28,7 +29,7 @@ import javax.swing.border.LineBorder;
 public class AddTrabajadores extends JDialog {
 	
 	private final JPanel CpGenero = new JPanel();
-	private JTextField Tfci;
+	private TextFieldID Tfci;
 	private JTextField Tfcargo;
 	private JTextField Tfnombre;
 	private JTextField Tfapellidos;
@@ -49,12 +50,12 @@ public class AddTrabajadores extends JDialog {
 		lblAadirTrabajador.setBounds(243, 16, 212, 30);
 		getContentPane().add(lblAadirTrabajador);
 		
-		Tfci = new JTextField();
+		Tfci = new TextFieldID();
 		Tfci.setColumns(10);
 		Tfci.setBounds(30, 104, 270, 40);
 		getContentPane().add(Tfci);
 		
-		JLabel label = new JLabel("Carner de Identidad:");
+		JLabel label = new JLabel("Carnet de Identidad:");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		label.setBounds(30, 70, 165, 20);
 		getContentPane().add(label);
@@ -90,7 +91,7 @@ public class AddTrabajadores extends JDialog {
 		getContentPane().add(lblApellidos);
 		
 		final JComboBox CbnEscolar = new JComboBox();
-		CbnEscolar.setModel(new DefaultComboBoxModel(new String[] {"Basico", "Medio", "MedioSuperior", "Superior"}));
+		CbnEscolar.setModel(new DefaultComboBoxModel(new String[] {"Básico", "Medio", "MedioSuperior", "Superior"}));
 		CbnEscolar.setBounds(30, 328, 270, 40);
 		getContentPane().add(CbnEscolar);
 		
@@ -122,7 +123,7 @@ public class AddTrabajadores extends JDialog {
 				if(!carnetId.equals("") && !cargo.equals("") && !nombre.equals("") && !apellidos.equals("")){
 					try{
 					Biblioteca.getInstance().contratarTrabajador(carnetId, nombre, apellidos, cargo, genero, NivelEscolar.valueOf(nivelEscolar));
-					JOptionPane.showMessageDialog(null, "Trabajador a�adido correctamente");
+					JOptionPane.showMessageDialog(null, "Trabajador añadido correctamente");
 					dispose();
 					father.Actualizar(4);
 					}catch(Exception e){

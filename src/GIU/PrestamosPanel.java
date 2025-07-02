@@ -4,22 +4,16 @@ import Logica.Biblioteca;
 import Logica.Prestamo;
 import Logica.Publicacion;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.Color;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.List;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ImageIcon;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 import static Util.TrabajarFechas.formatearFecha;
+import static Util.TrabajarFechas.getFechaActual;
 
 public class PrestamosPanel extends JPanel {
 	private CustomTable customTable;
@@ -42,6 +36,7 @@ public class PrestamosPanel extends JPanel {
 		btnNewButton.setBackground(Color.BLUE);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//Validar que hayan publicaciones y usuarios disponibles sin penalizaciones ni 3 prestamos activos
 			}
 		});
 		btnNewButton.setBounds(1390, 15, 228, 40);
@@ -86,7 +81,8 @@ public class PrestamosPanel extends JPanel {
 		textField.setBounds(72, 150, 350, 40);
 		add(textField);
 		textField.setColumns(10);
-		
+
+		//Para que es necesario el botón de editar?
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.setForeground(Color.DARK_GRAY);
 		btnEditar.setBackground(new Color(255, 255, 102));
@@ -97,8 +93,18 @@ public class PrestamosPanel extends JPanel {
 		btnDevolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int pos= customTable.getSelectedRow();
-				Prestamo p=Biblioteca.getInstance().getPrestamos().get(pos);
-				Biblioteca.getInstance().recibirDevolucion(p);
+				if(pos!=-1){
+					Prestamo p=Biblioteca.getInstance().getPrestamos().get(pos);
+					Biblioteca.getInstance().recibirDevolucion(p);
+				}
+				//Validar devolución de préstamo ya devuelto
+				else if(!Biblioteca.getInstance().getPrestamos().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Seleccione el préstamo a devolver",
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}else{
+					JOptionPane.showMessageDialog(null, "No hay préstamos disponibles para devolver",
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
 				
 			}
 		});
@@ -108,6 +114,24 @@ public class PrestamosPanel extends JPanel {
 		add(btnDevolver);
 		
 		JButton btnProrrogar = new JButton("Prorrogar");
+		btnProrrogar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int pos= customTable.getSelectedRow();
+				if(pos!=-1){
+					Prestamo p=Biblioteca.getInstance().getPrestamos().get(pos);
+					Biblioteca.getInstance().procesarProrroga(p,getFechaActual());
+				}
+				//Validar prórroga de préstamo ya prorrogado
+				else if(!Biblioteca.getInstance().getPrestamos().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Seleccione el préstamo a prorrogar",
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}else{
+					JOptionPane.showMessageDialog(null, "No hay préstamos disponibles para prorrogar",
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
+
+			}
+		});
 		btnProrrogar.setForeground(Color.WHITE);
 		btnProrrogar.setBackground(new Color(255, 0, 0));
 		btnProrrogar.setBounds(1069, 150, 165, 40);

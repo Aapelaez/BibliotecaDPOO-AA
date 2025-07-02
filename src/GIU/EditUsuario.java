@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import GIU.TextFieldID;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -28,7 +29,7 @@ public class EditUsuario extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private final JPanel CpGenero = new JPanel();
-	private JTextField JtCid;
+	private TextFieldID JtCid;
 	private JTextField JtName;
 	private JTextField JtApellidos;
 	private JTextField JtIdu;
@@ -87,7 +88,7 @@ public class EditUsuario extends JDialog {
 		lblCarnerDeIdentidad.setBounds(30, 70, 165, 20);
 		CpGenero.add(lblCarnerDeIdentidad);
 		
-		JtCid = new JTextField();
+		JtCid = new TextFieldID();
 		JtCid.setText(edit.getId());
 		JtCid.setEditable(false);
 		JtCid.setColumns(10);

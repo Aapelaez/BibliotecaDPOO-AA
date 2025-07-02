@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import GIU.TextFieldID;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -26,7 +27,7 @@ import javax.swing.border.LineBorder;
 public class EditTrabajador extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField Tfci;
+	private TextFieldID Tfci;
 	private JTextField Tfcargo;
 	private JTextField Tfnombre;
 	private JTextField Tfapellidos;
@@ -47,7 +48,7 @@ public class EditTrabajador extends JDialog {
 		lblAadirTrabajador.setBounds(243, 16, 212, 30);
 		getContentPane().add(lblAadirTrabajador);
 		
-		Tfci = new JTextField();
+		Tfci = new TextFieldID();
 		Tfci.setText(edit.getId());
 		Tfci.setEditable(false);
 		Tfci.setColumns(10);
